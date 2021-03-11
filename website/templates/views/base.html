@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="../../static/css/nav.css">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/nav.css') }}">
+
+    <title>title</title>
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <img src="../../static/images/ftyswdhgWhatsApp Image 2021-03-11 at 2.59.39 PM.png" alt="" class="header-img">
+
+            <a href="#" class="header-logo">XYZ</a>
+
+            <div class="header-search">
+                <input type="search" placeholder="Search" class="header-input">
+                <i class="fas fa-search header-icon"></i>
+            </div>
+
+            <div class="header-toggle">
+                <i class="fas fa-bars header-toggle-icon" id="nav-toggle"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="nav" id="navbar">
+        <nav class="nav-container">
+            <div class="">
+                <a href="#" class="nav-link nav-logo">
+                    <i class="far fa-comments nav-icon"></i>
+                    <span>XYZ</span>
+                </a>
+
+                <div class="nav-list">
+                    <div class="nav-items">
+                        <h3 class="nav-subtitle">Profile</h3>
+
+                        <a href="#" class="nav-link active">
+                            <i class="fas fa-house-user nav-icon"></i>
+                            <span class="nav-name">Home</span>
+                        </a>
+
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-user-circle nav-icon"></i>
+                            <span class="nav-name">Profile</span>
+                        </a>
+
+                        <div class="nav-dropdown">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-chalkboard-teacher nav-icon"></i>
+                                <span class="nav-name">Workspaces</span>
+                                <i class="fas fa-chevron-down nav-icon nav-dropdown-icon"></i>
+                            </a>
+
+                            <div class="nav-dropdown-collapse">
+                                <div class="nav-dropdown-content">
+                                    <a href="#" class="nav-dropdown-item">General</a>
+                                    <a href="#" class="nav-dropdown-item">new workspace</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="#" class="nav-link nav-logout">
+                <i class="fas fa-sign-out-alt nav-icon"></i>
+                <span class="nav-name">Logout</span>
+            </a>
+        </nav>
+    </div>
+
+    {% block content %}{% endblock %}
+    <script src="{{ url_for('static',filename='js/nav.js') }}"></script>
+</body>
+</html>
