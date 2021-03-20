@@ -67,10 +67,14 @@
 } */
 
 .createWorkspaceButton i{
-    margin-top: 1rem;
-    font-size: 3.5rem;
+    margin-top: 2rem;
+    font-size: 2.5rem;
     color: var(--white-color);
     opacity: 0.5;
+}
+
+.createWorkspaceButton i:hover{
+    transform: scale(1.1,1.1);
 }
 
 .workspaceIcon{
@@ -175,8 +179,8 @@
     text-transform: uppercase;
     font-size: 1rem;
     letter-spacing: 1px;
-    text-align: center;
-    border-bottom: 0.7px solid var(--white-color);
+    text-align: end;
+    border-bottom: 0.1px solid var(--dark--white);
     margin: 0 4rem 1rem 4rem;
 }
 
@@ -224,11 +228,14 @@
     border: none;
     outline: none;
     margin: 0.5rem;
-    background-color: rgba(255,255,255,0.75);
+    /* background-color: rgba(255,255,255,0.75); */
+    background-color: var(--dark--white);
     width: 100%;
     line-height: 1.5rem;
     border-radius: 0.5rem;
     padding: 0.5rem;
+    color: var(--white-color);
+    font-size: 1rem;
 }
 
 .send-message-container{
@@ -267,13 +274,13 @@
     left: 50%;
     top: 50%;
     width: 45%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
     height: 60vh;
     background-color: white;
     z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     visibility: hidden;
     opacity: 0;
     /* background-color: var(--dark--white); */
@@ -282,6 +289,39 @@
     /* background-color: rgba(255,255,255,0.2); */
     background-color: rgba(29,29,29,0.6);
     transition: 0.4s;
+}
+
+.content-createWorkspace{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.heading-createWorkspace{
+    width: 100%;
+    align-items: flex-end;
+}
+
+.heading-createWorkspace h5{
+    color: var(--dark-color);
+    width: 100%;
+    font-size: 1.25rem;
+    letter-spacing: 2px;
+    animation: text 2s;
+}
+
+.heading-createWorkspace h5 span{
+    text-transform: uppercase;
+}
+
+@keyframes text{
+    0%{
+        width: 0%;
+    }
+    50%{
+        width: 50%;
+    }
 }
 
 .createWorkspaceModalShow{
@@ -307,7 +347,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-end
+    align-items: flex-start
 }
 
 .createWorkspaceForm input{
@@ -344,6 +384,7 @@
     font-size: small;
     letter-spacing: 1px;
     text-transform: uppercase;
+    margin-left: 0.5rem;
 }
 
 .closeCreateWorkspace{
