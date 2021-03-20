@@ -5,8 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../static/css/nav.css">
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/nav.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/chat.css') }}">
 
     <title>title</title>
 </head>
@@ -28,7 +30,7 @@
         </div>
     </header>
 
-    <div class="nav" id="navbar">
+    <!-- <div class="nav" id="navbar">
         <nav class="nav-container">
             <div class="">
                 <a href="#" class="nav-link nav-logo">
@@ -38,43 +40,72 @@
 
                 <div class="nav-list">
                     <div class="nav-items">
-                        <h3 class="nav-subtitle">Profile</h3>
 
                         <a href="#" class="nav-link active">
                             <i class="fas fa-house-user nav-icon"></i>
-                            <span class="nav-name">Home</span>
                         </a>
 
-                        <a href="#" class="nav-link">
-                            <i class="fas fa-user-circle nav-icon"></i>
-                            <span class="nav-name">Profile</span>
-                        </a>
+                        <a href="#" class="nav-link"><i class="fas fa-user-circle nav-icon"></i></a>
 
-                        <div class="nav-dropdown">
-                            <a href="#" class="nav-link">
-                                <i class="fas fa-chalkboard-teacher nav-icon"></i>
-                                <span class="nav-name">Workspaces</span>
-                                <i class="fas fa-chevron-down nav-icon nav-dropdown-icon"></i>
-                            </a>
-
-                            <div class="nav-dropdown-collapse">
-                                <div class="nav-dropdown-content">
-                                    <a href="#" class="nav-dropdown-item">General</a>
-                                    <a href="#" class="nav-dropdown-item">new workspace</a>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
-            <a href="#" class="nav-link nav-logout">
-                <i class="fas fa-sign-out-alt nav-icon"></i>
-                <span class="nav-name">Logout</span>
-            </a>
         </nav>
+    </div> -->
+
+    <div class="chat-page">
+        <div class="row d-flex align-items-stretch">
+            <div class="col-3 col-md-1 workspace-list">
+                <div class="createWorkspace">
+                    <div class="createWorkspaceButton">
+                        <a href="#"><i class="fas fa-plus-circle"></i></a>
+                    </div>
+                </div>
+                <hr>
+                <div class="workspaceList">
+                    <div class="workspace">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5su_e5EULmaSR0GPr9PxMGcOVm22Tsg5Eyg&usqp=CAU" alt="" class="workspaceIcon">
+                    </div>
+                    <div class="workspace">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5su_e5EULmaSR0GPr9PxMGcOVm22Tsg5Eyg&usqp=CAU" alt="" class="workspaceIcon">
+                    </div>
+                </div>
+            </div>
+            <div class="col-9 col-md-2 channel-list">
+                <div class="createChannel">
+                    <div class="createChannelButton">
+                        <a href="#"><button id="createChannel"><i class="fas fa-plus"></i> Create Channel</button></a>
+                    </div>
+                </div>
+                <hr>
+                <div class="channelList">
+                    <div class="channel">
+                        <button class="channelName">#general</button>
+                    </div>
+                    <div class="channel">
+                        <button class="channelName">#general</button>
+                    </div>
+                    <div class="channel">
+                        <button class="channelName">#general</button>
+                    </div>
+                    <div class="channel">
+                        <button class="channelName">#general is a very very very long name to check text wrap</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7 chat-section">
+                {% block content %}{% endblock %}
+            </div>
+            <div class="col-md-2 profile-section">
+                <div class="createChannel">
+                    <button id="createChannel">+ Create Channel</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    {% block content %}{% endblock %}
+    
     <script src="{{ url_for('static',filename='js/nav.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/chat.js') }}"></script>
 </body>
 </html>

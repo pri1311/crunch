@@ -1,0 +1,125 @@
+:root{
+    --first-color: #121212;
+    --white-color: #acacac;
+    --dark-color: #EF7070;
+    --text-color: #3EBDC6;
+    --colorMain: #DE6F70;
+    --dark--white: #292929;
+    --brShadow: -3px 3px 7px;
+
+    --header-height: 3.5rem;
+    --nav-width: 219px;
+
+    --normal-font-size: 0.938rem;
+    --small-font-size: 0.75rem;
+    --smaller-font-size: 0.75rem;
+
+    --font-medium: 500;
+    --font-semi-bold: 600;
+
+    --z-fixed: 100;
+}
+
+.chat-page{
+    height: 90vh;
+    margin: auto;
+    justify-content: space-between;
+    /* margin-top: 3.5rem; */
+}
+
+.chat-page .row{
+    display: flex;
+    justify-content: space-around;
+    margin: 0;
+    padding: 0;
+    align-items: stretch;
+    overflow: hidden;
+}
+
+.channel-list, .workspace-list, .chat-section, .profile-section{
+    background-color: var(--first-color);
+    padding:0.5rem 0.5rem 3rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 92vh;
+    overflow: scroll;
+    scrollbar-width: none;
+}
+
+.channel-list, .profile-section{
+    background-color: var(--dark--white);
+}
+
+.channel-list::-webkit-scrollbar, .workspace-list::-webkit-scrollbar,
+.chat-section::-webkit-scrollbar, .profile-section::-webkit-scrollbar{
+    display: none;
+}
+
+/* .workspace-list{
+    background-color: var(--first-color);
+    padding: 0.5rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+} */
+
+.createWorkspaceButton i{
+    margin-top: 2rem;
+    font-size: 3.5rem;
+    color: var(--white-color);
+    opacity: 0.5;
+}
+
+.workspaceIcon{
+    border: 1px solid var(--white-color);
+    padding: 0.2rem;
+    margin: 0.3rem;
+    height: 3.5rem;
+    width: 3.5rem;
+    border-radius: 50%;
+}
+
+.channelName{
+    text-align: start;
+    width: 100%;
+    padding: 1em;
+    border: none;
+    outline: none;
+    background: rgba(0,0,0,0.2);
+    color: var(--white-color);
+    border-radius: 0.5rem;
+    margin: 0.2rem 0;
+}
+
+.channel{
+    width: 100%;
+}
+
+.channelList{
+    align-items: stretch;
+    width: 100%;
+    padding: 0 1rem;
+}
+
+#createChannel{
+    border: none;
+    outline: none;
+    background: var(--dark-color);
+    width: 100%;
+    padding: 1em;
+    border-radius: 1rem;
+    font-size: 1rem
+}
+
+#createChannel i{
+    font-size: 1rem;
+    margin-right: 1rem;
+}
+
+.createChannel{
+    margin-top: 2rem;
+    width: 100%;
+    padding: 0 1rem;
+}
