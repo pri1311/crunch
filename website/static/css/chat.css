@@ -44,7 +44,6 @@
     flex-direction: column;
     align-items: center;
     height: 87vh;
-    overflow: scroll;
     scrollbar-width: none;
     border-radius: 1rem;
 }
@@ -102,7 +101,14 @@
 .channelList{
     align-items: stretch;
     width: 100%;
-    padding: 0 1rem;
+    padding: 0 1rem;  
+    overflow: scroll;
+    scrollbar-width: none;
+    height: 100%;
+}
+
+.channelList::-webkit-scrollbar{
+    display: none;
 }
 
 #createChannel{
@@ -162,4 +168,91 @@
 
 .card a:hover{
     background-color: var(--white-color);
+}
+
+.chat-workspace-name{
+    padding: 0.5rem;
+    text-transform: uppercase;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    text-align: center;
+    border-bottom: 0.7px solid var(--white-color);
+    margin: 0 4rem 1rem 4rem;
+}
+
+.chatbubble-right{
+    align-self: flex-end;
+    border-right: 2px solid var(--dark-color);
+}
+
+.chatbubble-left{
+    align-self: flex-start;
+    border-left: 2px solid var(--dark-color);
+}
+
+.chats{
+    height: 63vh;
+    margin: 0;
+    padding: 0;
+    overflow: scroll;
+    scrollbar-width: none;
+}
+
+.chats::-webkit-scrollbar{
+    display: none;
+}
+
+.main-block{
+    width: 100%;
+    padding: 1rem;
+}
+
+.chatbubble{
+    min-width: 30%;
+    max-width: 75%;
+    background-color: var(--dark--white);
+    margin: 0.5rem;
+    padding: 0.5rem;
+}
+
+.chat-section{
+    padding-bottom: 0;
+    align-items: center;
+}
+
+.message-input{
+    border: none;
+    outline: none;
+    margin: 0.5rem;
+    background-color: rgba(255,255,255,0.75);
+    width: 100%;
+    line-height: 1.5rem;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+}
+
+.send-message-container{
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    background-color: var(--dark--white);
+    border-radius: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.send-message-container form{
+    width: 75%;
+    margin-right: 2rems;
+}
+
+.send-message-container:placeholder{
+    color: var(--first-color);
+}
+
+.chat-buttons{
+    align-self: flex-end;
+    margin: 0.5rem;
+    font-size: 1.5rem;
 }
