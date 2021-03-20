@@ -5,7 +5,7 @@
     --text-color: #3EBDC6;
     --colorMain: #DE6F70;
     --dark--white: #292929;
-    --brShadow: -3px 3px 7px;
+    --brShadow: -1px 1px 4px;
 
     --header-height: 3.5rem;
     --nav-width: 219px;
@@ -250,10 +250,11 @@ img{
 @media screen and (min-width: 768px){
     body{
         padding: 0rem 0rem 0 0rem;
+        overflow: hidden;
     }
 
     .header{
-        padding: 0 3rem 0 6rem;
+        padding: 0.2rem 3rem 0.2rem 2rem;
     }
 
     .header-container{

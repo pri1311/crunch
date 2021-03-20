@@ -23,10 +23,10 @@
                 <input type="search" placeholder="Search" class="header-input">
                 <i class="fas fa-search header-icon"></i>
             </div>
-
+<!-- 
             <div class="header-toggle">
                 <i class="fas fa-bars header-toggle-icon" id="nav-toggle"></i>
-            </div>
+            </div> -->
         </div>
     </header>
 
@@ -78,6 +78,9 @@
                     </div>
                 </div>
                 <hr>
+                <div class="channel-heading">
+                    <p>workspace Name</p>
+                </div>
                 <div class="channelList">
                     <div class="channel">
                         <button class="channelName">#general</button>
@@ -97,9 +100,18 @@
                 {% block content %}{% endblock %}
             </div>
             <div class="col-md-2 profile-section">
-                <div class="createChannel">
-                    <button id="createChannel">+ Create Channel</button>
-                </div>
+                <div class="card">
+                    <img class="card-img-top" src="https://cdn5.vectorstock.com/i/1000x1000/20/74/woman-avatar-profile-vector-21372074.jpg" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title">User Name</h5>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <div class="btn-group">
+                        <a href="#" class="btn btn-primary mr-1">Logout</a>
+                        <a href="#" class="btn btn-primary">Edit Profile</a>
+                      </div>
+                      
+                    </div>
+                  </div>
             </div>
         </div>
     </div>
