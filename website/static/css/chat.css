@@ -308,20 +308,10 @@
     width: 100%;
     font-size: 1.25rem;
     letter-spacing: 2px;
-    animation: text 2s;
 }
 
 .heading-createWorkspace h5 span{
     text-transform: uppercase;
-}
-
-@keyframes text{
-    0%{
-        width: 0%;
-    }
-    50%{
-        width: 50%;
-    }
 }
 
 .createWorkspaceModalShow{

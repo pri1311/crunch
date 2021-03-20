@@ -34,7 +34,7 @@
 
 body{
     margin: var(--header-height) 0 0 0;
-    /* padding: 1rem 1rem 0; */
+    padding: 1rem 1rem 0;
     font-size: var(--normal-font-size);
     background-color: var(--dark--white);
     color: var(--white-color);
@@ -87,6 +87,7 @@ img{
     display: flex;
     padding: 0.4rem 0.75rem;
     background-color: var(--white-color);
+    background-color: var(--dark--white);
     border-radius: 0.25rem;
 }
 
@@ -95,14 +96,18 @@ img{
     border: none;
     outline: none;
     background-color: var(--white-color);
+    background-color: var(--dark--white);
+    color: var(--white-color);
+    border-bottom: 0.5px solid var(--white-color);
 }
 
 .header-input::placeholder{
     color: var(--first-color);
+    color: var(--white-color);
 }
 
 .header-icon{
-    color: var(--dark--white);
+    color: var(--white-color);
 }
 
 .header-toggle{
