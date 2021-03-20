@@ -34,10 +34,12 @@
 
 body{
     margin: var(--header-height) 0 0 0;
-    padding: 1rem 1rem 0;
+    /* padding: 1rem 1rem 0; */
     font-size: var(--normal-font-size);
     background-color: var(--dark--white);
     color: var(--white-color);
+    align-items: center;
+    justify-content: center;
 }
 
 h3{
@@ -58,11 +60,15 @@ img{
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 97.5%;
     background-color: var(--dark--white);
-    box-shadow: var(--brShadow) var(--first-color);
+    /* box-shadow: var(--brShadow) var(--first-color); */
     padding: 0 1rem;
     z-index: var(--z-fixed);
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+    background-color: var(--first-color);
+    border-radius: 1rem;
 }
 
 .header-container{

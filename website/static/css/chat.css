@@ -25,6 +25,7 @@
     margin: 1rem;
     margin-top: 5rem;
     justify-content: space-between;
+    /* border-radius: 1rem; */
     /* margin-top: 3.5rem; */
 }
 
@@ -35,6 +36,7 @@
     padding: 0;
     align-items: stretch;
     overflow: hidden;
+    border-radius: 1.5rem;
 }
 
 .channel-list, .workspace-list, .chat-section, .profile-section{
@@ -45,12 +47,16 @@
     align-items: center;
     height: 87vh;
     scrollbar-width: none;
-    border-radius: 1rem;
+    /* border-radius: 1rem; */
 }
 
-.channel-list, .profile-section{
-    background-color: var(--dark--white);
+.channel-list, .workspace-list, .chat-section{
+    border-right: 0.5px solid var(--dark--white);
 }
+
+/* .channel-list, .profile-section{
+    background-color: var(--dark--white);
+} */
 
 .channel-list::-webkit-scrollbar, .workspace-list::-webkit-scrollbar,
 .chat-section::-webkit-scrollbar, .profile-section::-webkit-scrollbar{
@@ -146,6 +152,7 @@
 }
 
 .card{
+    margin-top: 1rem;
     background: none;
     align-content: center;
     align-items: center;
