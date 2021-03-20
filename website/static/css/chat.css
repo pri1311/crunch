@@ -175,6 +175,10 @@
     border: none;
     background-color: var(--dark-color);
     color: var(--first-color);
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: small;
 }
 
 .card a:hover{
