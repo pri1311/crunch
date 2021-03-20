@@ -256,3 +256,100 @@
     margin: 0.5rem;
     font-size: 1.5rem;
 }
+
+.bluractive{
+    filter: blur(20px);
+    pointer-events: none;
+}
+
+.createWorkspaceModal{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: 45%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    background-color: white;
+    z-index: 10000;
+    visibility: hidden;
+    opacity: 0;
+    /* background-color: var(--dark--white); */
+    padding: 3rem;
+    border-radius: 3rem;
+    /* background-color: rgba(255,255,255,0.2); */
+    background-color: rgba(29,29,29,0.6);
+    transition: 0.4s;
+}
+
+.createWorkspaceModalShow{
+    visibility: visible;
+    transform: translate(-50%, -50%);
+    opacity: 1;
+    transition: 0.4s;
+    text-align: end;
+}
+
+.createWorkspaceImage{
+    width: 100%;
+}
+
+.createWorkspaceImage img{
+    width: 100%;
+    height: auto;
+    transition: 0.4s;
+}
+
+.createWorkspaceForm{
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end
+}
+
+.createWorkspaceForm input{
+    outline: none;
+    border: none;
+    margin: 0.5rem;
+    width: 100%;
+    line-height: 2rem;
+    border-radius: 0.25rem;
+    padding-left: 0.75rem;
+}
+
+.createWorkspaceForm button{
+    background-color: var(--dark-color);
+    outline: none;
+    border: none;
+    margin: 0.5rem;
+    width: 100%;
+    transition: 0.4s;
+}
+
+.createWorkspaceForm button:hover{
+    transform: scale(1.05,1.05);
+    background-color: var(--dark-color);
+}
+
+.createWorkspaceImage img:hover{
+    transform: scale(1.05,1.05);
+}
+
+.closeCreateWorkspace p{
+    color: var(--white-color);
+    text-align: end;
+    font-size: small;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.closeCreateWorkspace{
+    color: var(--white-color);
+    text-align: end;
+    font-size: small;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
