@@ -1,28 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+        integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+        crossorigin="anonymous" />
     <link rel="stylesheet" href="../../static/css/style.css">
     <title>Document</title>
 </head>
+
 <body>
     <div class="container">
         <div class="forms-container">
             <div class="signin-signup">
-                <form action="" class="sign-in-form">
+                <form action="/login" method="POST" class="sign-in-form">
                     <h2 class="title">Sign In</h2>
                     <div class="input-field">
                         <i class="fas fa-user"></i>
-                        <input type="text" placeholder="Username">
+                        <input type="text" placeholder="Username" name="Username">
                     </div>
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
-                        <input type="password" placeholder="Password">
+                        <input type="password" placeholder="Password" name="password">
                     </div>
-                    <input type="submit"  value="Login" class="btn solid">
+                    <input type="submit" value="Login" class="btn solid">
                     <p class="social-text">Or sign in with social platforms</p>
                     <div class="social-media">
                         <a href="#" class="social-icon">
@@ -39,21 +43,21 @@
                         </a>
                     </div>
                 </form>
-                <form action="" class="sign-up-form">
+                <form action="/signup" method="POST" class="sign-up-form">
                     <h2 class="title">Sign Up</h2>
                     <div class="input-field">
                         <i class="fas fa-user"></i>
-                        <input type="text" placeholder="Username">
+                        <input type="text" placeholder="Username" name="name">
                     </div>
                     <div class="input-field">
                         <i class="fas fa-envelope"></i>
-                        <input type="email" placeholder="Email">
+                        <input type="email" placeholder="Email" name="email">
                     </div>
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
-                        <input type="password" placeholder="Password">
+                        <input type="password" placeholder="Password" name="password">
                     </div>
-                    <input type="submit"  value="sign up" class="btn solid">
+                    <input type="submit" value="sign up" class="btn solid">
                     <p class="social-text">Or sign up with social platforms</p>
                     <div class="social-media">
                         <a href="#" class="social-icon">
@@ -70,6 +74,9 @@
                         </a>
                     </div>
                 </form>
+                {% if error %}
+                <p class="error"><strong>Error:</strong> {{ error }}
+                    {% endif %}
             </div>
         </div>
 
@@ -77,7 +84,8 @@
             <div class="panel left-panel">
                 <div class="content">
                     <h3>New here?</h3>
-                    <p>A reiciendis eius totam temporibus nostrum architecto omnis, illum repudiandae cum, quisquam quia!</p>
+                    <p>A reiciendis eius totam temporibus nostrum architecto omnis, illum repudiandae cum, quisquam
+                        quia!</p>
                     <button class="btn transparent" id="sign-up-btn">Sign up</button>
                 </div>
                 <img src="../../static/images/1.png" class="image" alt="">
@@ -86,7 +94,8 @@
             <div class="panel right-panel">
                 <div class="content">
                     <h3>Already a member?</h3>
-                    <p>A reiciendis eius totam temporibus nostrum architecto omnis, illum repudiandae cum, quisquam quia!</p>
+                    <p>A reiciendis eius totam temporibus nostrum architecto omnis, illum repudiandae cum, quisquam
+                        quia!</p>
                     <button class="btn transparent" id="sign-in-btn">Sign in</button>
                 </div>
                 <img src="../../static/images/1.png" class="image" alt="">
@@ -97,4 +106,5 @@
 
     <script src="../../static/js/app.js"></script>
 </body>
+
 </html>
