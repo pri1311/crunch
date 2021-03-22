@@ -228,6 +228,7 @@
     background-color: var(--dark--white);
     margin: 0.5rem;
     padding: 0.5rem;
+    border-radius: 0.3rem;
 }
 
 .chat-section{
@@ -394,4 +395,46 @@
     font-size: small;
     letter-spacing: 1px;
     cursor: pointer;
+}
+
+@media screen and (max-width: 768px){
+    #body{
+        margin-top: 1.25rem;
+    }
+    .chat-page{
+        margin-top: 0.75rem;
+    }
+    .header{
+        width: 92%;
+        position: relative;
+    }
+    .channel-list, .workspace-list{
+        height: 85vh;
+        margin-bottom: 1.25rem;
+        /* border-radius: 1.5rem; */
+    } 
+    .workspace-list{
+        border-top-left-radius: 1.5rem;
+        border-bottom-left-radius: 1.5rem;
+    }
+    .channel-list{
+        border-top-right-radius: 1.5rem;
+        border-bottom-right-radius: 1.5rem;
+    }
+    .profile-section{
+        height: 100vh;
+        align-items: center;
+        justify-content: center;
+    }
+    .chats{
+        min-height: 75%;
+        max-height: 85vh;
+    }
+    .main-block, .chat-section{
+        height: 100vh;
+        justify-content: center;
+    }
+    .main-block .chat-workspace-name{
+        text-align: center;
+    }
 }

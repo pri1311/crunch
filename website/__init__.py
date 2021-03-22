@@ -27,6 +27,35 @@ class User(db.Model):
             "email":self.email,
         }
 
+class Workspace(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), index=True)
+    admin_username = db.Column(db.String(80), index=True)
+
+    def getJsonData(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "admin_username": self.admin_username,
+        }
+
+class Channel(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), index=True)
+    admin_username = db.Column(db.String(80), index=True)
+    wid = db.Column(db.Integer,index = True)
+
+
+    def getJsonData(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "admin_username": self.admin_username,
+            "workspace_id": self.wid,
+        }
+
 def create_app():
     current_direc = os.getcwd()
     databasePath = os.path.join(current_direc,"db.sqlite")
