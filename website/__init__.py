@@ -56,6 +56,24 @@ class Channel(db.Model):
             "workspace_id": self.wid,
         }
 
+class Chats(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    message = db.Column(db.String(80), index=True)
+    username = db.Column(db.String(80), index=True)
+    wid = db.Column(db.Integer,index = True)
+    channel_id = db.Column(db.Integer,index = True)
+
+
+    def getJsonData(self):
+        return {
+            "id": self.id,
+            "message": self.message,
+            "username": self.username,
+            "wid": self.wid,
+            "channel_id": self.channel_id,
+        }
+
 def create_app():
     current_direc = os.getcwd()
     databasePath = os.path.join(current_direc,"db.sqlite")
@@ -63,8 +81,8 @@ def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SECRET_KEY'] = 'xyzxyz xyzxyz xyzxyz'
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
-    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///:memory:"
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+    # app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///:memory:"
     
     with app.app_context():
         # from .models import user

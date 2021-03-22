@@ -35,7 +35,7 @@ def signup_post():
     db.session.commit()
     
         
-    return render_template("/views/base.html",error=error)
+    return redirect(url_for('views.home'))
 
 @auth.route('/login', methods=['POST'])
 def login_post():
@@ -55,4 +55,5 @@ def login_post():
         error="Please check your login details and try again."
         return render_template("/auth/login-register.html",error=error)
     
-    return render_template("/views/base.html",error=error)    
+    return redirect(url_for('views.home'))
+   
