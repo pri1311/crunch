@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template,request, redirect, url_for
 from . import db
-from .models import User
+from .__init__ import User
 
 auth = Blueprint('auth', __name__)
 
@@ -35,21 +35,24 @@ def signup_post():
     db.session.commit()
     
         
-    return render_template("/auth/chat.html",error=error)
+    return render_template("/views/base.html",error=error)
+
 @auth.route('/login', methods=['POST'])
 def login_post():
     error = None
     username = request.form.get('username')
     password = request.form.get('password')
+    print(username)
+    print(password)
 
     
     if not username or not password:
         error = "Missing Data"
         return render_template("/auth/login-register.html",error=error)
 
-    user = User.query.filter_by(username=username).first()
+    user = User.query.filter_by(name=username).first()
     if user is None or not user.check_password(password):
         error="Please check your login details and try again."
         return render_template("/auth/login-register.html",error=error)
     
-    return render_template("/auth/chat.html",error=error)    
+    return render_template("/views/base.html",error=error)    
