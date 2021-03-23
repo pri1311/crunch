@@ -11,28 +11,33 @@ document.addEventListener('DOMContentLoaded', ()=>{
         }
     });
 
+    socket.on('changeWorkspaceName',data=>{
+        var heading = document.getElementById('channel-heading');
+        heading.innerHTML = data['name'];
+    })
+
     socket.on('createWorkspaceJS', data => {
-        console.log(data)
-        console.log( data['admin_username'])
-        if (username == data['admin_username']){
+        if (username.innerHTML == data['admin_username']){
             var div = document.createElement("div");
             var img = document.createElement("img");
             var span = document.createElement("span");
-            span.classList.add('cid');
+            span.classList.add('wid');
             div.classList.add('workspace');
             span.innerHTML = data['id'];
             img.src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5su_e5EULmaSR0GPr9PxMGcOVm22Tsg5Eyg&usqp=CAU";
             img.classList.add('workspaceIcon');
             div.appendChild(img);
+            div.appendChild(span);
             var list = document.getElementById('workspaceList');
             list.appendChild(div);
             div.addEventListener('click',function(){
                 var saved = document.getElementById('workspace-id-saved');
-                console.log
-                saved.innerHTML=div.childNodes[3].innerHTML;
+                console.log(this.childNodes)
+                saved.innerHTML=this.childNodes[1].innerHTML;
                 console.log(saved.innerHTML)
                 socket.emit('join',{wid: saved.innerHTML});
                 socket.emit('getChannels', {wid:saved.innerHTML});
+                socket.emit('changeWorkspaceName', {wid:saved.innerHTML});
             })
             socket.emit('join',{wid: data['id']});
         }
@@ -47,12 +52,21 @@ document.addEventListener('DOMContentLoaded', ()=>{
             var list = document.getElementById('channelList');
             div.classList.add('channel');
             span.classList.add('cid');
-            span.innerHTML = data['wid'];
+            span.innerHTML = data['id'];
             button.innerHTML = "#" + data['name'];
             button.classList.add('channelName');
             div.appendChild(button);
             div.appendChild(span);
             list.appendChild(div);
+            div.addEventListener('click', function(){
+                var saved = document.getElementById('channel-id-saved');
+                console.log(div.childNodes)
+                console.log(this.childNodes)
+                saved.innerHTML=div.childNodes[1].innerHTML;
+                console.log(saved.innerHTML)
+                // console.log(this.childNodes[3].innerHTML)
+                // console.log(saved.innerHTML)
+            })
         }
     });
 
@@ -65,11 +79,24 @@ document.addEventListener('DOMContentLoaded', ()=>{
         for (var i = 0; i < data['channelCount']; i++){
             const div = document.createElement("div");
             const button = document.createElement("button");
+            const span = document.createElement("span");
             div.classList.add('channel');
             button.innerHTML = "#" + channels[i][i].name;
             button.classList.add('channelName');
+            span.classList.add('cid');
+            span.innerHTML = channels[i][i].wid;
             div.appendChild(button);
+            div.appendChild(span);
             list.appendChild(div);
+            div.addEventListener('click', function(){
+                console.log(div.childNodes)
+                console.log(this.childNodes)
+                var saved = document.getElementById('channel-id-saved');
+                saved.innerHTML=div.childNodes[1].innerHTML;
+                console.log(saved.innerHTML)
+                // console.log(this.childNodes[3].innerHTML)
+                // console.log(saved.innerHTML)
+            })
         }
     })
 
@@ -122,6 +149,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
             console.log(saved.innerHTML)
             socket.emit('join',{wid: saved.innerHTML});
             socket.emit('getChannels', {wid:saved.innerHTML});
+            socket.emit('changeWorkspaceName', {wid:saved.innerHTML});
             // console.log(this.childNodes[3].innerHTML)
             // console.log(saved.innerHTML)
         })

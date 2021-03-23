@@ -4,10 +4,6 @@ from flask_socketio import SocketIO, send, emit, join_room
 app = create_app()
 
 socketio = SocketIO(app,logger=True, engineio_logger=True)
-# with app.app_context():
-#     db.create_all()
-#     print("hello")
-# # db.create_all(app)
 
 @socketio.on('message')
 def handle_message(data):
@@ -29,30 +25,29 @@ def handle_createWorkspace(data):
         "id": room.id,
     }
     emit('createWorkspaceJS',data, broadcast=True)
-    # send({"msg": data['data'], "wid":"1", "channel_d":"2"})
 
 @socketio.on('createChannel')
 def handle_createChannel(data):
-    # print(data)
     c = Channel()
     c.admin_username = data['username']
     c.name = data['name']
     c.wid = data['wid']
     room = Workspace.query.filter_by(id = data['wid']).first()
-    # print("from workspace")
-    # print(room.name)
-    # print("from workspace")
     db.session.add(c)
     db.session.commit()
+    room = Channel.query.filter_by(name = data['name']).first()
+    data = {
+        "name":data['name'],
+        "admin_username": data['username'],
+        "id": room.id,
+        "wid":wid,
+    }
     emit('createChannelJS',data, room=room.name, broadcast= True)
-    # send({"msg": data['data'], "wid":"1", "channel_d":"2"})
 
 @socketio.on('join')
 def joinRoom(data):
-    # print(data['wid'])
     if (data['wid']):
         room = Workspace.query.filter_by(id = data['wid']).first()
-        # print(room.name)
         join_room(room.name)
     else:
         join_room(data['name'])   
@@ -74,6 +69,12 @@ def sendChannels(data):
         }})
         i = i + 1
     emit('getChannelsJS', {"channels":ch, "channelCount":ChannelCount, "name":room.name})
+
+@socketio.on('getWorkspaceName')
+def get_workspaceName(data):
+    wid = data['wid']
+    room = Workspace.query.filter_by(id = wid).first()
+    emit('changeWorkspaceName', {"name":room.name})
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)

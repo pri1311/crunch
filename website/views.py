@@ -15,10 +15,11 @@ def chat():
     Workspaces = Workspace.query.all()
     count = Workspace.query.count()
     ChannelCount = 0
-    if session['username'] is None:
+    if session.get("USERNAME") is None:
         username = current_user.name
     else:
         username = session['username']
+        
     print(username)
     if len(Workspaces) > 0:
         Channels = Channel.query.filter_by(wid = Workspaces[0].id).all()

@@ -58,14 +58,19 @@
     background-color: var(--dark--white);
 } */
 
-.channel-list::-webkit-scrollbar, .workspace-list::-webkit-scrollbar,
-.chat-section::-webkit-scrollbar, .profile-section::-webkit-scrollbar{
-    display: none;
-}
-
 .workspace{
     cursor: pointer;
 }
+
+.workspaceList, .channelList{
+    overflow: scroll;
+    scrollbar-width: none;
+}
+
+.workspaceList::-webkit-scrollbar, .channelList::-webkit-scrollbar{
+    display: none !important; 
+}
+
 
 /* .workspace-list{
     background-color: var(--first-color);
@@ -413,4 +418,12 @@
     font-size: small;
     letter-spacing: 1px;
     cursor: pointer;
+}
+
+
+.channel-list::-webkit-scrollbar, .workspace-list::-webkit-scrollbar,
+.chat-section::-webkit-scrollbar, .profile-section::-webkit-scrollbar
+.workspaceList::-webkit-scrollbar, #workspaceList::-webkit-scrollbar{
+    display: none;
+    opacity: 0;
 }
