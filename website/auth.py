@@ -52,19 +52,11 @@ def login_post():
 
     user = User.query.filter_by(name=name).first()
     if user is None or not user.check_password(password):
-<<<<<<< HEAD
         error="Please check your login details and try again."
         return render_template("/auth/login-register.html",error=error)
         
     session.pop('username', None)
     login_user(user, remember=remember)
-=======
-        error = "Please check your login details and try again."
-        return render_template("/auth/login-register.html", error=error)
-
-    session['name'] = name
-    # login_user(user, remember=remember)
->>>>>>> d5b7b2db90a955c1c51cb152331f2d483d39de9f
     return redirect(url_for('views.chat'))
 
 
