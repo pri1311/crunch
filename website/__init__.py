@@ -16,6 +16,7 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(80), index=True, unique=True)
     email = db.Column(db.String(80), index=True, unique=True)
     password_hash = db.Column(db.String(128))
+    workspace_list = db.Column(db.String(100))
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -36,6 +37,7 @@ class Workspace(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), index=True)
     admin_username = db.Column(db.String(80), index=True)
+    
 
     def getJsonData(self):
         return {
@@ -60,6 +62,7 @@ class Channel(db.Model):
             "workspace_id": self.wid,
         }
 
+    
 
 class Chats(db.Model):
 
@@ -95,13 +98,12 @@ def create_app():
         login_manager = LoginManager()
         login_manager.login_view = 'auth.login'
         login_manager.init_app(app)
-
+        db.create_all()
         @login_manager.user_loader
         def load_user(user_id):
             # since the user_id is just the primary key of our user table, use it in the query for the user
             return User.query.get(int(user_id))
-        db.create_all()
-
+        # db.create_all()
         from .views import views
         from .auth import auth
 

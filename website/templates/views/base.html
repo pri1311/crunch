@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../static/css/nav.css">
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/nav.css') }}">
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/chat.css') }}">
 
@@ -42,7 +41,11 @@
                     {% else %}
                         <span id="workspace-id-saved" style="display: none;"></span>
                     {% endif %}
-                    <span id="channel-id-saved" style="display: none;"></span>
+                    {% if channelCount > 0 %}
+                        <span id="channel-id-saved" style="display: none;">{{channels[0].id}}</span>
+                    {% else %}
+                        <span id="channel-id-saved" style="display: none;"></span>
+                    {% endif %}
                     <div class="workspaceList" id="workspaceList">
                         {%for i in range(0, count)%} 
                             <div class="workspace"> 
@@ -50,12 +53,6 @@
                                 <span class="wid" style="display: none;">{{workspace[i].id}}</span>
                             </div>
                         {%endfor%}
-                        <!-- <div class="workspace"> 
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5su_e5EULmaSR0GPr9PxMGcOVm22Tsg5Eyg&usqp=CAU" alt="" class="workspaceIcon">
-                        </div>
-                        <div class="workspace">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5su_e5EULmaSR0GPr9PxMGcOVm22Tsg5Eyg&usqp=CAU" alt="" class="workspaceIcon">
-                        </div> -->
                     </div>
                 </div>
                 <div class="col-9 col-md-2 channel-list">
@@ -79,18 +76,6 @@
                             <span class="cid" style="display: none;">{{channels[i].id}}</span>
                         </div>
                         {%endfor%}
-                        <!-- <div class="channel">
-                            <button class="channelName">#general</button>
-                        </div>
-                        <div class="channel">
-                            <button class="channelName">#general</button>
-                        </div>
-                        <div class="channel">
-                            <button class="channelName">#general</button>
-                        </div>
-                        <div class="channel">
-                            <button class="channelName">#general is a very very very long name to check text wrap</button>
-                        </div> -->
                     </div>
                 </div>
                 <div class="col-md-7 chat-section">
@@ -127,7 +112,7 @@
                     <div class="card">
                         <img class="card-img-top" src="https://cdn5.vectorstock.com/i/1000x1000/20/74/woman-avatar-profile-vector-21372074.jpg" alt="Card image cap">
                         <div class="card-body">
-                          <h5 class="card-title" id="username">username</h5>
+                          <h5 class="card-title" id="username">{{username}}</h5>
                           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                           <div class="btn-group">
                             <a href="#" class="btn btn-primary mr-1">Logout</a>

@@ -6,54 +6,56 @@ from .__init__ import User
 auth = Blueprint('auth', __name__)
 
 
-@auth.route('/signup', methods=['POST'])
+@auth.route('/signup', methods=['POST', 'GET'])
 def signup_post():
-    error = None
-    email = request.form.get('email')
-    name = request.form.get('name')
-    password = request.form.get('password')
-    if not password or not email or not name:
-        error = "Invalid Credentials. Please try again."
-        return render_template("/auth/login-register.html", error=error)
+    if request.method == 'POST':
+        error = None
+        email = request.form.get('email')
+        name = request.form.get('name')
+        password = request.form.get('password')
+        if not password or not email or not name:
+            error = "Invalid Credentials. Please try again."
+            return render_template("/auth/login-register.html", error=error)
 
-    if User.query.filter_by(name=name).count() == 1:
-        error = "Name already taken. Please try again."
-        return render_template("/auth/login-register.html", error=error)
+        if User.query.filter_by(name=name).count() == 1:
+            error = "Name already taken. Please try again."
+            return render_template("/auth/login-register.html", error=error)
 
-    if User.query.filter_by(email=email).count() == 1:
-        error = "Email already taken. Please try again."
-        return render_template("/auth/login-register.html", error=error)
+        if User.query.filter_by(email=email).count() == 1:
+            error = "Email already taken. Please try again."
+            return render_template("/auth/login-register.html", error=error)
 
-    # session['username'] = name
-    u = User()
-    u.name = name
-    u.email = email
-    u.set_password(password)
-
-    db.session.add(u)
-    db.session.commit()
-    
-        
-    return redirect(url_for('views.chat'))
+        # session['username'] = name
+        u = User()
+        u.name = name
+        u.email = email
+        u.set_password(password)
+        session['username'] = name
+        db.session.add(u)
+        db.session.commit()    
+                
+        return redirect(url_for('views.chat'))
+    else:
+        return render_template("/auth/login-register.html")
 
 @auth.route('/login', methods=['POST'])
 def login_post():
     error = None
-    username = request.form.get('username')
+    name = request.form.get('name')
     password = request.form.get('password')
     remember = True if request.form.get('remember') else False
 
-    if not username or not password:
+    if not name or not password:
         error = "Missing Data"
         return render_template("/auth/login-register.html", error=error)
 
-    user = User.query.filter_by(name=username).first()
+    user = User.query.filter_by(name=name).first()
     if user is None or not user.check_password(password):
         error="Please check your login details and try again."
         return render_template("/auth/login-register.html",error=error)
         
-    session['username'] = username
-    # login_user(user, remember=remember)
+    session.pop('username', None)
+    login_user(user, remember=remember)
     return redirect(url_for('views.chat'))
 
 
@@ -62,5 +64,5 @@ def login_post():
 @login_required
 def logout():
     logout_user()
-    session.pop('username', None)
+    session.pop('name', None)
     return render_template('/auth/login-register.html')

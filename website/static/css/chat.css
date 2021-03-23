@@ -189,6 +189,10 @@
     background-color: var(--white-color);
 }
 
+
+
+/* CHAT SECTION */
+
 .chat-workspace-name{
     padding: 0.5rem;
     text-transform: uppercase;
@@ -278,6 +282,12 @@
     margin: 0.5rem;
     font-size: 1.5rem;
 }
+
+.cid, .wid{
+    display: none;
+}
+
+/* CHAT SECTION */
 
 .bluractive{
     filter: blur(20px);
