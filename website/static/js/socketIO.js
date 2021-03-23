@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
     });
 
     socket.on('createWorkspaceJS', data => {
+        console.log(data)
+        console.log( data['admin_username'])
         if (username == data['admin_username']){
             var div = document.createElement("div");
             var img = document.createElement("img");
