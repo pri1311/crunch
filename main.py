@@ -8,6 +8,7 @@ socketio = SocketIO(app,logger=True, engineio_logger=True)
 @socketio.on('message')
 def handle_message(data):
     print(data)
+    
     send({"msg": data['data'], "wid":"1", "channel_d":"2"})
 
 @socketio.on('createWorkspace')
@@ -19,6 +20,7 @@ def handle_createWorkspace(data):
     db.session.add(w)
     db.session.commit()
     room = Workspace.query.filter_by(name = data['name']).first()
+    join_room(room.name)
     data = {
         "name":data['name'],
         "admin_username": data['username'],
@@ -35,12 +37,12 @@ def handle_createChannel(data):
     room = Workspace.query.filter_by(id = data['wid']).first()
     db.session.add(c)
     db.session.commit()
-    room = Channel.query.filter_by(name = data['name']).first()
+    room = Workspace.query.filter_by(id = data['wid']).first()
     data = {
         "name":data['name'],
         "admin_username": data['username'],
         "id": room.id,
-        "wid":wid,
+        "wid":data['wid'],
     }
     emit('createChannelJS',data, room=room.name, broadcast= True)
 
@@ -75,6 +77,20 @@ def get_workspaceName(data):
     wid = data['wid']
     room = Workspace.query.filter_by(id = wid).first()
     emit('changeWorkspaceName', {"name":room.name})
+
+@socketio.on('chatmsg')
+def chat_msg(data):
+    c = Chats()
+    c.message = data['msg']
+    c.username = data['username']
+    c.wid = data['wid']
+    c.channel_id = data['channel_id']
+    db.session.add(c)
+    db.session.commit()
+    wid = data['wid']
+    room = Workspace.query.filter_by(id = wid).first()
+    join_room(room.name)
+    emit('receiveMessage', data, broadcast= True, room=room.name)
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)

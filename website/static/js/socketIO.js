@@ -11,9 +11,45 @@ document.addEventListener('DOMContentLoaded', ()=>{
         }
     });
 
+    socket.on('receiveMessage', data=>{
+        console.log(data)
+        var saved = document.getElementById('workspace-id-saved').innerHTML;
+        var channelid = document.getElementById('channel-id-saved').innerHTML;
+        var username = document.getElementById('username').innerHTML
+        if (data['channel_id'].toString() == channelid.toString() && data['wid'].toString()==saved.toString()){
+            var list = document.getElementById('chats');
+            list.classList.add('chats')
+            list.classList.add('flex-column')
+            list.classList.add('d-flex')
+            if (username == data['username']){
+                var div = document.createElement("div");
+                var p = document.createElement("p");
+                div.classList.add('chatbubble');
+                div.classList.add('chatbubble-right');
+                p.innerHTML= data['msg']
+                div.appendChild(p);
+                list.appendChild(div);
+            }
+            else{
+                var div = document.createElement("div");
+                var p = document.createElement("p");
+                var b = document.createElement("b");
+                div.classList.add('chatbubble');
+                div.classList.add('chatbubble-left');
+                b.innerHTML = data['username']
+                p.innerHTML= data['msg']
+                div.appendChild(b)
+                div.appendChild(p)
+                list.appendChild(div);
+            }
+        }
+    })
+
     socket.on('changeWorkspaceName',data=>{
         var heading = document.getElementById('channel-heading');
         heading.innerHTML = data['name'];
+        var saved = document.getElementById('workspace-id-saved');
+        socket.emit('join',{wid: saved.innerHTML});
     })
 
     socket.on('createWorkspaceJS', data => {
@@ -64,6 +100,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 console.log(this.childNodes)
                 saved.innerHTML=div.childNodes[1].innerHTML;
                 console.log(saved.innerHTML)
+                var saved = document.getElementById('workspace-id-saved');
+                socket.emit('join',{wid: saved.innerHTML});
                 // console.log(this.childNodes[3].innerHTML)
                 // console.log(saved.innerHTML)
             })
@@ -94,6 +132,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 var saved = document.getElementById('channel-id-saved');
                 saved.innerHTML=div.childNodes[1].innerHTML;
                 console.log(saved.innerHTML)
+                var saved = document.getElementById('workspace-id-saved');
+                socket.emit('join',{wid: saved.innerHTML});
                 // console.log(this.childNodes[3].innerHTML)
                 // console.log(saved.innerHTML)
             })
@@ -137,7 +177,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
         var msg = chatMessageInput.value;
         var saved = document.getElementById('workspace-id-saved').innerHTML;
         var channelid = document.getElementById('channel-id-saved').innerHTML;
-
+        var username = document.getElementById('username').innerHTML
+        socket.emit('join',{wid: saved});
+        socket.emit('chatmsg', {msg: msg, wid: saved, channel_id:channelid, username:username})
         chatMessageInput.value = ""; 
     });
 
