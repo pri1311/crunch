@@ -32,35 +32,34 @@ def signup_post():
 
     db.session.add(u)
     db.session.commit()
-    
-        
+
     return redirect(url_for('views.chat'))
+
 
 @auth.route('/login', methods=['POST'])
 def login_post():
     error = None
-    username = request.form.get('username')
+    name = request.form.get('name')
     password = request.form.get('password')
     remember = True if request.form.get('remember') else False
 
-    if not username or not password:
+    if not name or not password:
         error = "Missing Data"
         return render_template("/auth/login-register.html", error=error)
 
-    user = User.query.filter_by(name=username).first()
+    user = User.query.filter_by(name=name).first()
     if user is None or not user.check_password(password):
-        error="Please check your login details and try again."
-        return render_template("/auth/login-register.html",error=error)
-        
-    session['username'] = username
+        error = "Please check your login details and try again."
+        return render_template("/auth/login-register.html", error=error)
+
+    session['name'] = name
     # login_user(user, remember=remember)
     return redirect(url_for('views.chat'))
-
 
 
 @auth.route('/logout')
 @login_required
 def logout():
     logout_user()
-    session.pop('username', None)
+    session.pop('name', None)
     return render_template('/auth/login-register.html')
