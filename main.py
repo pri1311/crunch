@@ -1,5 +1,7 @@
 from website import create_app,db,Workspace, User, Channel, Chats
 from flask_socketio import SocketIO, send, emit, join_room
+from flask import session
+from flask_login import login_user, logout_user, login_required, current_user
 
 app = create_app()
 
@@ -8,7 +10,16 @@ socketio = SocketIO(app,logger=True, engineio_logger=True)
 @socketio.on('message')
 def handle_message(data):
     print(data)
-    
+    if session.get("USERNAME") is None:
+        username = current_user.name
+    else:
+        username = session['username']
+    user = User.query.filter_by(name = username).first()
+    if user.workspace_list:
+        wlist = user.workspace_list.split()
+        wid = int(wlist[0])
+        room = Workspace.query.filter_by(id = wid).first()
+        join_room(room.name)
     send({"msg": data['data'], "wid":"1", "channel_d":"2"})
 
 @socketio.on('createWorkspace')
@@ -20,6 +31,13 @@ def handle_createWorkspace(data):
     db.session.add(w)
     db.session.commit()
     room = Workspace.query.filter_by(name = data['name']).first()
+    user = User.query.filter_by(name = data['username']).first()
+    if user.workspace_list:
+        user.workspace_list = user.workspace_list + str(room.id) + " "
+    else:
+        user.workspace_list = str(room.id) +" "
+    db.session.commit()
+    print("hello",user.workspace_list)
     join_room(room.name)
     data = {
         "name":data['name'],
@@ -87,10 +105,31 @@ def chat_msg(data):
     c.channel_id = data['channel_id']
     db.session.add(c)
     db.session.commit()
+    print(c)
     wid = data['wid']
     room = Workspace.query.filter_by(id = wid).first()
     join_room(room.name)
     emit('receiveMessage', data, broadcast= True, room=room.name)
+
+@socketio.on('getMessages')
+def sendMessages(data):
+    chats = Chats.query.filter_by(wid = data['wid'], channel_id = data['channel_id']).all()
+    chatscount = len(chats)
+    i = 0
+    ch = []
+    wid = data['wid']
+    room = Workspace.query.filter_by(id = wid).first()
+    join_room(room.name)
+    for c in chats:
+        ch.append({i:{
+            'id': c.id,
+            'message': c.message,
+            'username': c.username,
+            'wid':c.wid,
+            'channel_id': c.channel_id,
+        }})
+        i = i + 1
+    emit('receiveMessageJS', {"chats":ch}, broadcast= True, room=room.name)
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)

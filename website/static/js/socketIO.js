@@ -11,6 +11,37 @@ document.addEventListener('DOMContentLoaded', ()=>{
         }
     });
 
+    socket.on('receiveMessageJS', data=>{
+        var list = document.getElementById('chats');
+        removeAllChildNodes(list)
+        var chats = data['chats']
+        var username = document.getElementById('username').innerHTML
+        for (var i = 0; i < chats.length; i++){
+            if (username == chats[i][i].username){
+                var div = document.createElement("div");
+                var p = document.createElement("p");
+                div.classList.add('chatbubble');
+                div.classList.add('chatbubble-right');
+                p.innerHTML= chats[i][i].message
+                div.appendChild(p);
+                list.appendChild(div);
+            }
+            else{
+                var div = document.createElement("div");
+                var p = document.createElement("p");
+                var b = document.createElement("b");
+                div.classList.add('chatbubble');
+                div.classList.add('chatbubble-left');
+                b.innerHTML =  chats[i][i].username
+                p.innerHTML= chats[i][i].message
+                div.appendChild(b)
+                div.appendChild(p)
+                list.appendChild(div);
+            }
+        }
+        console.log(data)
+    })
+
     socket.on('receiveMessage', data=>{
         console.log(data)
         var saved = document.getElementById('workspace-id-saved').innerHTML;
@@ -93,18 +124,19 @@ document.addEventListener('DOMContentLoaded', ()=>{
             button.classList.add('channelName');
             div.appendChild(button);
             div.appendChild(span);
-            list.appendChild(div);
             div.addEventListener('click', function(){
                 var saved = document.getElementById('channel-id-saved');
-                console.log(div.childNodes)
-                console.log(this.childNodes)
-                saved.innerHTML=div.childNodes[1].innerHTML;
+                // console.log(div.childNodes)
+                // console.log(this.childNodes)
+                saved.innerHTML=this.childNodes[1].innerHTML;
                 console.log(saved.innerHTML)
                 var saved = document.getElementById('workspace-id-saved');
                 socket.emit('join',{wid: saved.innerHTML});
+                socket.emit('getMessages', {wid:saved.innerHTML, channel_id: this.childNodes[1].innerHTML});
                 // console.log(this.childNodes[3].innerHTML)
                 // console.log(saved.innerHTML)
             })
+            list.appendChild(div);
         }
     });
 
@@ -122,21 +154,20 @@ document.addEventListener('DOMContentLoaded', ()=>{
             button.innerHTML = "#" + channels[i][i].name;
             button.classList.add('channelName');
             span.classList.add('cid');
-            span.innerHTML = channels[i][i].wid;
+            span.innerHTML = channels[i][i].id;
             div.appendChild(button);
             div.appendChild(span);
-            list.appendChild(div);
             div.addEventListener('click', function(){
-                console.log(div.childNodes)
-                console.log(this.childNodes)
                 var saved = document.getElementById('channel-id-saved');
-                saved.innerHTML=div.childNodes[1].innerHTML;
+                saved.innerHTML=this.childNodes[1].innerHTML;
                 console.log(saved.innerHTML)
                 var saved = document.getElementById('workspace-id-saved');
                 socket.emit('join',{wid: saved.innerHTML});
+                socket.emit('getMessages', {wid:saved.innerHTML, channel_id: this.childNodes[1].innerHTML});
                 // console.log(this.childNodes[3].innerHTML)
                 // console.log(saved.innerHTML)
             })
+            list.appendChild(div);
         }
     })
 
@@ -201,8 +232,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
         var el = channels[w].parentNode
         el.addEventListener('click', function(){
             var saved = document.getElementById('channel-id-saved');
+            var wid = document.getElementById('workspace-id-saved');
             saved.innerHTML=this.childNodes[3].innerHTML;
             console.log(saved.innerHTML)
+            socket.emit('getMessages', {wid:wid.innerHTML, channel_id: saved.innerHTML});
             // console.log(this.childNodes[3].innerHTML)
             // console.log(saved.innerHTML)
         })

@@ -19,10 +19,10 @@
     
                 <a href="#" class="header-logo">XYZ</a>
     
-                <div class="header-search">
+                <!-- <div class="header-search">
                     <input type="search" placeholder="Search" class="header-input">
                     <i class="fas fa-search header-icon"></i>
-                </div>
+                </div> -->
             </div>
         </header>
     
@@ -80,8 +80,26 @@
                 </div>
                 <div class="col-md-7 chat-section">
                     <div class="main-block">
-                        <p class="chat-workspace-name">workspace Name</p>
+                        <div class="channel-heading">
+                            {% if channelCount > 0 %}
+                                <p class="chat-workspace-name">{{channels[0].name}}</p>
+                            {% else %}
+                                <p class="chat-workspace-name">Start Collaborating today!</p>
+                            {% endif %}
+                        </div>
                         <div class="chats d-flex flex-column" id="chats">
+                            {%for i in range(0, chatscount)%} 
+                                {% if chats[i].username == username %}
+                                <div class="chatbubble chatbubble-right">
+                                    <p>{{chats[i].message}}</p>
+                                </div>
+                                {% else %}
+                                <div class="chatbubble chatbubble-left">
+                                    <b>{{chats[i].username}}</b>
+                                    <p>{{chats[i].message}}</p>
+                                </div>
+                                {% endif %}
+                            {%endfor%}
                           <!-- <div class="chatbubble chatbubble-left">
                             <p>some message</p>
                           </div>
