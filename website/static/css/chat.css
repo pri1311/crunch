@@ -63,6 +63,10 @@
     display: none;
 }
 
+.workspace{
+    cursor: pointer;
+}
+
 /* .workspace-list{
     background-color: var(--first-color);
     padding: 0.5rem;

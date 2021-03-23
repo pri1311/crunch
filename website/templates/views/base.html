@@ -37,7 +37,12 @@
                         </div>
                     </div>
                     <hr>
-                    <span id="workspace-id-saved" style="display: none;">{{workspace[0].id}}</span>
+                    {% if count > 0 %}
+                        <span id="workspace-id-saved" style="display: none;">{{workspace[0].id}}</span>
+                    {% else %}
+                        <span id="workspace-id-saved" style="display: none;"></span>
+                    {% endif %}
+                    <span id="channel-id-saved" style="display: none;"></span>
                     <div class="workspaceList" id="workspaceList">
                         {%for i in range(0, count)%} 
                             <div class="workspace"> 
@@ -61,12 +66,17 @@
                     </div>
                     <hr>
                     <div class="channel-heading">
-                        <p>{{workspace[0].name}}</p>
+                        {% if count > 0 %}
+                            <p id="channel-heading">{{workspace[0].name}}</p>
+                        {% else %}
+                            <p id="channel-heading">  </p>
+                        {% endif %}
                     </div>
                     <div class="channelList" id="channelList">
                         {%for i in range(0, channelCount)%} 
                         <div class="channel">
                             <button class="channelName">#{{channels[i].name}}</button>
+                            <span class="cid" style="display: none;">{{channels[i].id}}</span>
                         </div>
                         {%endfor%}
                         <!-- <div class="channel">
@@ -117,7 +127,7 @@
                     <div class="card">
                         <img class="card-img-top" src="https://cdn5.vectorstock.com/i/1000x1000/20/74/woman-avatar-profile-vector-21372074.jpg" alt="Card image cap">
                         <div class="card-body">
-                          <h5 class="card-title" id="username">{{username}}</h5>
+                          <h5 class="card-title" id="username">username</h5>
                           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                           <div class="btn-group">
                             <a href="#" class="btn btn-primary mr-1">Logout</a>

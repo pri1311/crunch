@@ -11,11 +11,13 @@ def main_page():
 @views.route('/chat')
 def chat():
     Workspaces = Workspace.query.all()
-    Channels = Channel.query.filter_by(wid = Workspaces[0].id).all()
-    print(Workspaces[0].id)
-    ChannelCount = Channel.query.filter_by(wid = Workspaces[0].id).count()
-    print(Channels)
     count = Workspace.query.count()
-    username = session['username']
-    return render_template('/views/base.html', workspace = Workspaces, count = count, username = username, channels = Channels, channelCount = ChannelCount)
+    ChannelCount = 0
+    if len(Workspaces) > 0:
+        Channels = Channel.query.filter_by(wid = Workspaces[0].id).all()
+        print(Workspaces[0].id)
+        ChannelCount = Channel.query.filter_by(wid = Workspaces[0].id).count()
+        print(Channels)
+        return render_template('/views/base.html', workspace = Workspaces, count = count, channels = Channels, channelCount = ChannelCount)
+    return render_template('/views/base.html', workspace = Workspaces, count = count, channelCount = ChannelCount)
 

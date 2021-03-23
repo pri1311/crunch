@@ -24,7 +24,7 @@ def signup_post():
         error = "Email already taken. Please try again."
         return render_template("/auth/login-register.html", error=error)
 
-    session['username'] = name
+    # session['username'] = name
     u = User()
     u.name = name
     u.email = email

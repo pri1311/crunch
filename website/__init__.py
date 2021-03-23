@@ -89,7 +89,6 @@ def create_app():
         # from .models import user
         db.init_app(app)
         db.create_all()
-        print("heelo")
 
         from .views import views
         from .auth import auth

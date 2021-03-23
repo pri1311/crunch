@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     });
 
     socket.on('message', data => {
-        console.log(data);
+        // console.log(data);
         if (data.wid == "1" && data.channel_id=="2"){
             console.log(data.msg);
         }
@@ -17,11 +17,26 @@ document.addEventListener('DOMContentLoaded', ()=>{
     });
 
     socket.on('createChannelJS', data => {
-        console.log(data);
+        var saved = document.getElementById('workspace-id-saved').innerHTML;
+        // console.log(typeof saved)
+        // console.log(typeof data['wid'])
+        if (data['wid'] == saved){
+            const div = document.createElement("div");
+            const button = document.createElement("button");
+            var list = document.getElementById('channelList');
+            div.classList.add('channel');
+            button.innerHTML = "#" + data['name'];
+            button.classList.add('channelName');
+            div.appendChild(button);
+            list.appendChild(div);
+        }
+        // console.log(data);
     });
 
     socket.on('getChannelsJS', data=>{
-        console.log(data);
+        // console.log(data);
+        var heading = document.getElementById('channel-heading');
+        heading.innerHTML = data['name']
         var list = document.getElementById('channelList');
         removeAllChildNodes(list);
         var channels = data['channels']
@@ -29,7 +44,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
             const div = document.createElement("div");
             const button = document.createElement("button");
             div.classList.add('channel');
-            console.log(channels[i][i])
+            // console.log(channels[i][i])
             button.innerHTML = "#" + channels[i][i].name;
             // button.innerHTML = "channel"
             button.classList.add('channelName');
@@ -52,7 +67,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         var workspaceNameUsername = document.getElementById('workspaceNameUsername');
         var createWorkspaceModal = document.getElementById('createWorkspaceModal');
         var blur = document.getElementById('blur');
-        console.log({name: workspaceNameInput.value, username:workspaceNameUsername.value});
+        // console.log({name: workspaceNameInput.value, username:workspaceNameUsername.value});
         createWorkspaceModal.classList.toggle('createWorkspaceModalShow');
         blur.classList.toggle('bluractive');
         var div = document.createElement("div");
@@ -62,8 +77,17 @@ document.addEventListener('DOMContentLoaded', ()=>{
         img.classList.add('workspaceIcon');
         div.appendChild(img);
         var list = document.getElementById('workspaceList');
+        div.addEventListener('click',function(){
+            var saved = document.getElementById('workspace-id-saved');
+            saved.innerHTML=this.childNodes[3].innerHTML;
+            console.log(saved.innerHTML)
+            socket.emit('join',{wid: saved.innerHTML});
+            socket.emit('getChannels', {wid:saved.innerHTML});
+            // console.log(this.childNodes[3].innerHTML)
+            // console.log(saved.innerHTML)
+        })
         list.appendChild(div);
-        console.log(list)
+        // console.log(list)
         socket.emit('createWorkspace', {name: workspaceNameInput.value, username:workspaceNameUsername.value});
     });
 
@@ -73,20 +97,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
         var ChannelNameUsername = document.getElementById('ChannelNameUsername');
         var createChannelModal = document.getElementById('createChannelModal');
         var blur = document.getElementById('blur');
-        var saved = document.getElementById('workspace-id-saved').innerHTML;
+        var saved = document.getElementById('workspace-id-saved');
         createChannelModal.classList.toggle('createChannelModalShow');
         blur.classList.toggle('bluractive');
-        const div = document.createElement("div");
-        const button = document.createElement("button");
-        div.classList.add('channel');
-        button.innerHTML= "#" +ChannelNameInput.value;
-        // console.log(button.innerHTML)
-        button.classList.add('channelName');
-        div.appendChild(button);
-        var list = document.getElementById('channelList');
-        list.appendChild(div);
-        // console.log(list)
-        socket.emit('createChannel', {name: ChannelNameInput.value, username:ChannelNameUsername.value, wid: saved});
+        socket.emit('createChannel', {name: ChannelNameInput.value, username:ChannelNameUsername.value, wid: saved.innerHTML});
         ChannelNameInput.value = "";
     });
 
@@ -96,13 +110,16 @@ document.addEventListener('DOMContentLoaded', ()=>{
         
     });
 
-    for (var w =0; w<7;w++){
+    for (var w =0; w<workspaces.length;w++){
         var el = workspaces[w].parentNode
         el.addEventListener('click', function(){
             var saved = document.getElementById('workspace-id-saved');
             saved.innerHTML=this.childNodes[3].innerHTML;
+            console.log(saved.innerHTML)
+            socket.emit('join',{wid: saved.innerHTML});
             socket.emit('getChannels', {wid:saved.innerHTML});
-            console.log(this.childNodes[3].innerHTML)
+            // console.log(this.childNodes[3].innerHTML)
+            // console.log(saved.innerHTML)
         })
     }
 
