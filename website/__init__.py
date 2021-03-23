@@ -93,7 +93,7 @@ def create_app():
         # from .models import user
         db.init_app(app)
         login_manager = LoginManager()
-        login_manager.login_view = 'auth.login'
+        login_manager.login_view = 'auth.login_post'
         login_manager.init_app(app)
 
         @login_manager.user_loader
