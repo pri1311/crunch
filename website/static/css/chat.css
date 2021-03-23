@@ -280,7 +280,7 @@
     pointer-events: none;
 }
 
-.createWorkspaceModal{
+.createWorkspaceModal, .createChannelModal{
     position: fixed;
     left: 50%;
     top: 50%;
@@ -302,30 +302,30 @@
     transition: 0.4s;
 }
 
-.content-createWorkspace{
+.content-createWorkspace, .content-createChannel{
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 }
 
-.heading-createWorkspace{
+.heading-createWorkspace, .heading-createChannel{
     width: 100%;
     align-items: flex-end;
 }
 
-.heading-createWorkspace h5{
+.heading-createWorkspace h5, .heading-createChannel h5{
     color: var(--dark-color);
     width: 100%;
     font-size: 1.25rem;
     letter-spacing: 2px;
 }
 
-.heading-createWorkspace h5 span{
+.heading-createWorkspace h5 span, .heading-createChannel h5 span{
     text-transform: uppercase;
 }
 
-.createWorkspaceModalShow{
+.createWorkspaceModalShow, .createChannelModalShow{
     visibility: visible;
     transform: translate(-50%, -50%);
     opacity: 1;
@@ -333,17 +333,17 @@
     text-align: end;
 }
 
-.createWorkspaceImage{
+.createWorkspaceImage, .createChannelImage{
     width: 100%;
 }
 
-.createWorkspaceImage img{
+.createWorkspaceImage img, .createChannelImage img{
     width: 100%;
     height: auto;
     transition: 0.4s;
 }
 
-.createWorkspaceForm{
+.createWorkspaceForm, .createChannelForm{
     width: 75%;
     display: flex;
     flex-direction: column;
@@ -351,7 +351,8 @@
     align-items: flex-start
 }
 
-.createWorkspaceForm input{
+.createWorkspaceForm input,
+.createChannelForm input{
     outline: none;
     border: none;
     margin: 0.5rem;
@@ -361,7 +362,8 @@
     padding-left: 0.75rem;
 }
 
-.createWorkspaceForm button{
+.createWorkspaceForm button,
+.createChannelForm button{
     background-color: var(--dark-color);
     outline: none;
     border: none;
@@ -370,16 +372,19 @@
     transition: 0.4s;
 }
 
-.createWorkspaceForm button:hover{
+.createWorkspaceForm button:hover,
+.createChannelForm button:hover{
     transform: scale(1.05,1.05);
     background-color: var(--dark-color);
 }
 
-.createWorkspaceImage img:hover{
+.createWorkspaceImage img:hover,
+.createChannelImage img:hover{
     transform: scale(1.05,1.05);
 }
 
-.closeCreateWorkspace p{
+.closeCreateWorkspace p,
+.closeCreateChannel p{
     color: var(--white-color);
     text-align: end;
     font-size: small;
@@ -388,7 +393,7 @@
     margin-left: 0.5rem;
 }
 
-.closeCreateWorkspace{
+.closeCreateWorkspace, .closeCreateChannel{
     color: var(--white-color);
     text-align: end;
     font-size: small;

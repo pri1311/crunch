@@ -37,11 +37,12 @@
                         </div>
                     </div>
                     <hr>
+                    <span id="workspace-id-saved" style="display: none;">{{workspace[0].id}}</span>
                     <div class="workspaceList" id="workspaceList">
                         {%for i in range(0, count)%} 
                             <div class="workspace"> 
                                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5su_e5EULmaSR0GPr9PxMGcOVm22Tsg5Eyg&usqp=CAU" alt="" class="workspaceIcon">
-                                <span style="display: none;">{{workspace[i].id}}</span>
+                                <span class="wid" style="display: none;">{{workspace[i].id}}</span>
                             </div>
                         {%endfor%}
                         <!-- <div class="workspace"> 
@@ -62,7 +63,7 @@
                     <div class="channel-heading">
                         <p>workspace Name</p>
                     </div>
-                    <div class="channelList">
+                    <div class="channelList" id="channelList">
                         <div class="channel">
                             <button class="channelName">#general</button>
                         </div>
@@ -111,7 +112,7 @@
                     <div class="card">
                         <img class="card-img-top" src="https://cdn5.vectorstock.com/i/1000x1000/20/74/woman-avatar-profile-vector-21372074.jpg" alt="Card image cap">
                         <div class="card-body">
-                          <h5 class="card-title">User Name</h5>
+                          <h5 class="card-title" id="username">{{username}}</h5>
                           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                           <div class="btn-group">
                             <a href="#" class="btn btn-primary mr-1">Logout</a>
@@ -145,9 +146,27 @@
         </div>
     </div>
 
-    {%if (count == 0){%} 
+    <div class="createChannelModal" id="createChannelModal">
+        <div class="heading-createChannel">
+            <h5><span>teamwork</span> makes the dream work.</h5>
+        </div>
+        <div class="content-createChannel">
+            <div class="createChannelImage">
+                <img src="../../static/images/Brainstorming session _Monochromatic.svg" alt="">
+            </div>
+            <div class="createChannelForm">
+                <form action="">
+                    <input type="text" placeholder="Channel Name" id="ChannelNameInput">
+                    <input type="text" placeholder="Admin Name" id="ChannelNameUsername">
+                    <button class="btn btn-primary" id="createChannelButton">Create Channel</button>
+                </form>
+                <div class="closeCreateChannel" id="closeCreateChannel">
+                    <p>Close</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    {%}%} 
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
     <script src="{{ url_for('static',filename='js/socketIO.js') }}"></script>

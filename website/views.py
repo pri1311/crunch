@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, session
 views = Blueprint('views', __name__)
 from flask_socketio import SocketIO, send
 from .__init__ import User, Workspace,db
@@ -12,5 +12,6 @@ def main_page():
 def chat():
     Workspaces = Workspace.query.all()
     count = Workspace.query.count()
-    return render_template('/views/base.html', workspace = Workspaces, count = count)
+    username = session['username']
+    return render_template('/views/base.html', workspace = Workspaces, count = count, username = username)
 

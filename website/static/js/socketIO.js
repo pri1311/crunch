@@ -16,13 +16,20 @@ document.addEventListener('DOMContentLoaded', ()=>{
         console.log(data);
     });
 
+    socket.on('createChannelJS', data => {
+        console.log(data);
+    });
+
 
     var createWorkspaceButton = document.getElementById('createWorkspaceButton');
+    var createChannelButton = document.getElementById('createChannelButton');
     var sendMessage = document.getElementById('send-message');
     var chatMessageInput = document.getElementById('chatMessageInput');
+    var workspaces = document.querySelectorAll('.wid');
+    
 
     createWorkspaceButton.addEventListener('click', function(){
-        console.log("hello");
+        // console.log("hello");
         var workspaceNameInput = document.getElementById('workspaceNameInput');
         var workspaceNameUsername = document.getElementById('workspaceNameUsername');
         var createWorkspaceModal = document.getElementById('createWorkspaceModal');
@@ -30,8 +37,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
         console.log({name: workspaceNameInput.value, username:workspaceNameUsername.value});
         createWorkspaceModal.classList.toggle('createWorkspaceModalShow');
         blur.classList.toggle('bluractive');
-        workspaceNameUsername.value = "";
-        workspaceNameInput.value = "";
         var div = document.createElement("div");
         var img = document.createElement("img");
         div.classList.add('workspace');
@@ -42,6 +47,32 @@ document.addEventListener('DOMContentLoaded', ()=>{
         list.appendChild(div);
         console.log(list)
         socket.emit('createWorkspace', {name: workspaceNameInput.value, username:workspaceNameUsername.value});
+        workspaceNameUsername.value = "";
+        workspaceNameInput.value = "";
+    });
+
+    createChannelButton.addEventListener('click', function(){
+        // console.log("hello");
+        var ChannelNameInput = document.getElementById('ChannelNameInput');
+        var ChannelNameUsername = document.getElementById('ChannelNameUsername');
+        var createChannelModal = document.getElementById('createChannelModal');
+        var blur = document.getElementById('blur');
+        var saved = document.getElementById('workspace-id-saved').innerHTML;
+        createChannelModal.classList.toggle('createChannelModalShow');
+        blur.classList.toggle('bluractive');
+        var div = document.createElement("div");
+        var button = document.createElement("button");
+        div.classList.add('channel');
+        button.innerHTML= "#" +ChannelNameInput.value;
+        // console.log(button.innerHTML)
+        button.classList.add('channelName');
+        div.appendChild(button);
+        var list = document.getElementById('channelList');
+        list.appendChild(div);
+        // console.log(list)
+        socket.emit('createChannel', {name: ChannelNameInput.value, username:ChannelNameUsername.value, wid: saved});
+        ChannelNameUsername.value = "";
+        ChannelNameInput.value = "";
     });
 
     sendMessage.addEventListener('click', function(){
@@ -49,4 +80,14 @@ document.addEventListener('DOMContentLoaded', ()=>{
         chatMessageInput.value = "";
         
     });
+
+    for (var w =0; w<7;w++){
+        var el = workspaces[w].parentNode
+        el.addEventListener('click', function(){
+            console.log(this.childNodes[3].innerHTML)
+            var saved = document.getElementById('workspace-id-saved');
+            saved.innerHTML=this.childNodes[3].innerHTML;
+        })
+    }
+
 })

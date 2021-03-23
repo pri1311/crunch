@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, session
 from flask_login import login_user, logout_user, login_required
 from . import db
 from .__init__ import User
@@ -24,6 +24,7 @@ def signup_post():
         error = "Email already taken. Please try again."
         return render_template("/auth/login-register.html", error=error)
 
+    session['username'] = name
     u = User()
     u.name = name
     u.email = email
@@ -51,7 +52,8 @@ def login_post():
         error="Please check your login details and try again."
         return render_template("/auth/login-register.html",error=error)
         
-    login_user(use,r, remember=remember)
+    session['username'] = username
+    # login_user(user, remember=remember)
     return redirect(url_for('views.chat'))
 
 
@@ -60,4 +62,5 @@ def login_post():
 @login_required
 def logout():
     logout_user()
+    session.pop('username', None)
     return render_template('/auth/login-register.html')
