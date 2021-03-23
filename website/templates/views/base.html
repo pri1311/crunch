@@ -61,10 +61,15 @@
                     </div>
                     <hr>
                     <div class="channel-heading">
-                        <p>workspace Name</p>
+                        <p>{{workspace[0].name}}</p>
                     </div>
                     <div class="channelList" id="channelList">
+                        {%for i in range(0, channelCount)%} 
                         <div class="channel">
+                            <button class="channelName">#{{channels[i].name}}</button>
+                        </div>
+                        {%endfor%}
+                        <!-- <div class="channel">
                             <button class="channelName">#general</button>
                         </div>
                         <div class="channel">
@@ -75,7 +80,7 @@
                         </div>
                         <div class="channel">
                             <button class="channelName">#general is a very very very long name to check text wrap</button>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="col-md-7 chat-section">

@@ -25,7 +25,7 @@ def handle_createWorkspace(data):
     emit('createWorkspaceJS',data)
     # send({"msg": data['data'], "wid":"1", "channel_d":"2"})
 
-@socketio.on('createWorkspace')
+@socketio.on('createChannel')
 def handle_createWorkspace(data):
     print(data)
     c = Channel()
@@ -36,6 +36,23 @@ def handle_createWorkspace(data):
     db.session.commit()
     emit('createChannelJS',data)
     # send({"msg": data['data'], "wid":"1", "channel_d":"2"})
+
+@socketio.on('getChannels')
+def sendChannels(data):
+    wid = data['wid']
+    Channels = Channel.query.filter_by(wid = wid).all()
+    ch = []
+    ChannelCount = Channel.query.filter_by(wid = wid).count()
+    i = 0
+    for c in Channels:
+        ch.append({i:{
+            'id': c.id,
+            'name': c.name,
+            'admin_username': c.admin_username,
+            'wid':c.wid
+        }})
+        i = i + 1
+    emit('getChannelsJS', {"channels":ch, "channelCount":ChannelCount})
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)

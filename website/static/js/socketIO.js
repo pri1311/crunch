@@ -20,6 +20,24 @@ document.addEventListener('DOMContentLoaded', ()=>{
         console.log(data);
     });
 
+    socket.on('getChannelsJS', data=>{
+        console.log(data);
+        var list = document.getElementById('channelList');
+        removeAllChildNodes(list);
+        var channels = data['channels']
+        for (var i = 0; i < data['channelCount']; i++){
+            const div = document.createElement("div");
+            const button = document.createElement("button");
+            div.classList.add('channel');
+            console.log(channels[i][i])
+            button.innerHTML = "#" + channels[i][i].name;
+            // button.innerHTML = "channel"
+            button.classList.add('channelName');
+            div.appendChild(button);
+            list.appendChild(div);
+        }
+    })
+
 
     var createWorkspaceButton = document.getElementById('createWorkspaceButton');
     var createChannelButton = document.getElementById('createChannelButton');
@@ -47,8 +65,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
         list.appendChild(div);
         console.log(list)
         socket.emit('createWorkspace', {name: workspaceNameInput.value, username:workspaceNameUsername.value});
-        workspaceNameUsername.value = "";
-        workspaceNameInput.value = "";
     });
 
     createChannelButton.addEventListener('click', function(){
@@ -60,8 +76,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
         var saved = document.getElementById('workspace-id-saved').innerHTML;
         createChannelModal.classList.toggle('createChannelModalShow');
         blur.classList.toggle('bluractive');
-        var div = document.createElement("div");
-        var button = document.createElement("button");
+        const div = document.createElement("div");
+        const button = document.createElement("button");
         div.classList.add('channel');
         button.innerHTML= "#" +ChannelNameInput.value;
         // console.log(button.innerHTML)
@@ -71,7 +87,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
         list.appendChild(div);
         // console.log(list)
         socket.emit('createChannel', {name: ChannelNameInput.value, username:ChannelNameUsername.value, wid: saved});
-        ChannelNameUsername.value = "";
         ChannelNameInput.value = "";
     });
 
@@ -84,10 +99,17 @@ document.addEventListener('DOMContentLoaded', ()=>{
     for (var w =0; w<7;w++){
         var el = workspaces[w].parentNode
         el.addEventListener('click', function(){
-            console.log(this.childNodes[3].innerHTML)
             var saved = document.getElementById('workspace-id-saved');
             saved.innerHTML=this.childNodes[3].innerHTML;
+            socket.emit('getChannels', {wid:saved.innerHTML});
+            console.log(this.childNodes[3].innerHTML)
         })
+    }
+
+    function removeAllChildNodes(parent) {
+        while (parent.firstChild) {
+            parent.removeChild(parent.firstChild);
+        }
     }
 
 })
