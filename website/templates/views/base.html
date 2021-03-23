@@ -37,13 +37,19 @@
                         </div>
                     </div>
                     <hr>
-                    <div class="workspaceList">
-                        <div class="workspace">
+                    <div class="workspaceList" id="workspaceList">
+                        {%for i in range(0, count)%} 
+                            <div class="workspace"> 
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5su_e5EULmaSR0GPr9PxMGcOVm22Tsg5Eyg&usqp=CAU" alt="" class="workspaceIcon">
+                                <span style="display: none;">{{workspace[i].id}}</span>
+                            </div>
+                        {%endfor%}
+                        <!-- <div class="workspace"> 
                             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5su_e5EULmaSR0GPr9PxMGcOVm22Tsg5Eyg&usqp=CAU" alt="" class="workspaceIcon">
                         </div>
                         <div class="workspace">
                             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5su_e5EULmaSR0GPr9PxMGcOVm22Tsg5Eyg&usqp=CAU" alt="" class="workspaceIcon">
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="col-9 col-md-2 channel-list">
@@ -75,7 +81,7 @@
                     <div class="main-block">
                         <p class="chat-workspace-name">workspace Name</p>
                         <div class="chats d-flex flex-column" id="chats">
-                          <div class="chatbubble chatbubble-left">
+                          <!-- <div class="chatbubble chatbubble-left">
                             <p>some message</p>
                           </div>
                           <div class="chatbubble chatbubble-right">
@@ -89,15 +95,15 @@
                           </div>
                           <div class="chatbubble chatbubble-right">
                             <p>some message Lorem ipsum dolor sit amet consectetur adipisicing elit. Est nostrum, eaque fugiat laborum quibusdam cumque delectus possimus culpa veritatis id! Sapiente, deleniti architecto ullam culpa obcaecati placeat porro quisquam perspiciatis.</p>
-                          </div>
+                          </div> -->
                         </div>
                         <div class="send-message-container">
                           <form action="">
-                            <input class="message-input" type="text" placeholder="Type a message...">
+                            <input id="chatMessageInput" class="message-input" type="text" placeholder="Type a message...">
                           </form>
-                          <a href="#" class="send-message chat-buttons"><i class="fas fa-paper-plane"></i></a>
-                          <a href="#" class="send-image chat-buttons"><i class="fas fa-camera-retro"></i></a>
-                          <a href="#" class="voice-message chat-buttons"><i class="fas fa-microphone-alt"></i></a>
+                          <a href="#" id="send-message" class="send-message chat-buttons"><i class="fas fa-paper-plane"></i></a>
+                          <a href="#" id="send-image" class="send-image chat-buttons"><i class="fas fa-camera-retro"></i></a>
+                          <a href="#" id="voice-message" class="voice-message chat-buttons"><i class="fas fa-microphone-alt"></i></a>
                         </div>
                     </div>
                 </div>
@@ -128,9 +134,9 @@
             </div>
             <div class="createWorkspaceForm">
                 <form action="">
-                    <input type="text" placeholder="Workspace Name">
-                    <input type="text" placeholder="Admin Name">
-                    <button class="btn btn-primary">Create workspace</button>
+                    <input type="text" placeholder="Workspace Name" id="workspaceNameInput">
+                    <input type="text" placeholder="Admin Name" id="workspaceNameUsername">
+                    <button class="btn btn-primary" id="createWorkspaceButton">Create workspace</button>
                 </form>
                 <div class="closeCreateWorkspace" id="closeCreateWorkspace">
                     <p>Close</p>
@@ -138,7 +144,13 @@
             </div>
         </div>
     </div>
-    
+
+    {%if (count == 0){%} 
+
+    {%}%} 
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static',filename='js/socketIO.js') }}"></script>
     <!-- <script src="{{ url_for('static',filename='js/nav.js') }}"></script> -->
     <script src="{{ url_for('static',filename='js/chat.js') }}"></script>
 </body>
