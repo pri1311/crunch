@@ -166,7 +166,7 @@ def addWorkspace(data):
         else:
             room = Workspace.query.filter_by(name = data['name'],).first()
             user.workspace_list = str(room.id) +" "
-            emit('workspaceJoined', {"wid": room.id}, room = room.name)
+            emit('workspaceJoined', {"wid": room.id, "name": room.name}, room = room.name)
     db.session.commit()
 
 def random_string(letter_count, digit_count):  

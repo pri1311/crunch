@@ -47,7 +47,7 @@
                     {% endif %}
                     <div class="workspaceList" id="workspaceList">
                         {%for i in range(0, count)%} 
-                            <div class="workspace"> 
+                            <div data-toggle="tooltip" data-placement="right" title="{{workspace[i].name}}" class="workspace"> 
                                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5su_e5EULmaSR0GPr9PxMGcOVm22Tsg5Eyg&usqp=CAU" alt="" class="workspaceIcon">
                                 <span class="wid" style="display: none;">{{workspace[i].id}}</span>
                             </div>
@@ -112,7 +112,7 @@
                 </div>
                 <div class="col-md-2 profile-section">
                     <div class="card">
-                        <img class="card-img-top" src="{{image}}" alt="Card image cap">
+                        <img class="card-img-top" src="../../static/images/Brainstorming session _Monochromatic.svg" alt="Card image cap">
                         <div class="card-body" id="card_body">
                           <h5 class="card-title" id="username">{{username}}</h5>
                           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>

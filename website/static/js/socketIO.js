@@ -23,6 +23,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
         var span = document.createElement("span");
         span.classList.add('wid');
         div.classList.add('workspace');
+        div.setAttribute("data-toggle", "tooltip");
+        div.setAttribute("data-placement", "right");
+        div.setAttribute("title",data['name'] )
         span.innerHTML = data['wid'];
         img.src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5su_e5EULmaSR0GPr9PxMGcOVm22Tsg5Eyg&usqp=CAU";
         img.classList.add('workspaceIcon');
@@ -146,7 +149,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
             img.classList.add('workspaceIcon');
             div.appendChild(img);
             div.appendChild(span);
-            var list = document.getElementById('workspaceList');
+            div.setAttribute("data-toggle", "tooltip");
+            div.setAttribute("data-placement", "right");
+            div.setAttribute("title",data['name'] )
+            span.innerHTML = data['wid'];
+                var list = document.getElementById('workspaceList');
             list.appendChild(div);
             div.addEventListener('click',function(){
                 var saved = document.getElementById('workspace-id-saved');
