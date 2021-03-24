@@ -36,7 +36,7 @@
     padding: 0;
     align-items: stretch;
     overflow: hidden;
-    border-radius: 1.5rem;
+    /* border-radius: 1.5rem; */
 }
 
 .channel-list, .workspace-list, .chat-section, .profile-section{

@@ -4,6 +4,7 @@ from flask import session
 from flask_login import login_user, logout_user, login_required, current_user
 import random  
 import string
+from flask import Blueprint, render_template, session
 
 app = create_app()
 
@@ -169,6 +170,19 @@ def random_string(letter_count, digit_count):
     random.shuffle(sam_list) # It uses a random.shuffle() function to shuffle the string.  
     final_string = ''.join(sam_list)  
     return final_string 
+
+@app.errorhandler(405)
+  
+# inbuilt function which takes error as parameter
+def not_found(e):
+  return render_template("/auth/login-register.html")
+
+@app.errorhandler(404)
+  
+# inbuilt function which takes error as parameter
+def not_found(e):
+  return render_template("/views/404.html")
+
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)

@@ -40,4 +40,3 @@ def chat():
                 return render_template('/views/base.html', workspace = Workspaces, count = count, channels = Channels, channelCount = ChannelCount,username = username, chats= chats, chatscount = chatscount)
         return render_template('/views/base.html', workspace = Workspaces, count = count, channels = Channels, channelCount = ChannelCount,username = username, chatscount = chatscount)
     return render_template('/views/base.html', workspace = Workspaces, count = count, channelCount = ChannelCount, username = username, chatscount = chatscount)
-
