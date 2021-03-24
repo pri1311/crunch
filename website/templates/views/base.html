@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/nav.css') }}">
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/chat.css') }}">
-
     <title>title</title>
 </head>
 <body id="body">
@@ -113,7 +112,7 @@
                 </div>
                 <div class="col-md-2 profile-section">
                     <div class="card">
-                        <img class="card-img-top" src="https://cdn5.vectorstock.com/i/1000x1000/20/74/woman-avatar-profile-vector-21372074.jpg" alt="Card image cap">
+                        <img class="card-img-top" src="{{image}}" alt="Card image cap">
                         <div class="card-body" id="card_body">
                           <h5 class="card-title" id="username">{{username}}</h5>
                           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>

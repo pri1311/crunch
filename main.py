@@ -5,10 +5,17 @@ from flask_login import login_user, logout_user, login_required, current_user
 import random  
 import string
 from flask import Blueprint, render_template, session
+import cloudinary as Cloud
 
 app = create_app()
 
 socketio = SocketIO(app,logger=True, engineio_logger=True)
+
+Cloud.config.update = ({
+    'cloud_name':'xyz123456789xyz',
+    'api_key': '881914523258343',
+    'api_secret': 't5p0GTrAArAQGyj2YJUpg3RUeCM'
+})
 
 @socketio.on('message')
 def handle_message(data):

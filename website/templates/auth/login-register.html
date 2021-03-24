@@ -43,7 +43,7 @@
                         </a>
                     </div>
                 </form>
-                <form action="/signup" method="POST" class="sign-up-form">
+                <form action="/signup" method="POST" class="sign-up-form" enctype="multipart/form-data">
                     <h2 class="title">Sign Up</h2>
                     <div class="input-field">
                         <i class="fas fa-user"></i>
@@ -52,6 +52,10 @@
                     <div class="input-field">
                         <i class="fas fa-envelope"></i>
                         <input type="email" placeholder="Email" name="email">
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-user-circle"></i>
+                        <input type="file" placeholder="Profile Photo" name="image">
                     </div>
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
