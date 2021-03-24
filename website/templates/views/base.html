@@ -82,9 +82,9 @@
                     <div class="main-block">
                         <div class="channel-heading">
                             {% if channelCount > 0 %}
-                                <p class="chat-workspace-name">{{channels[0].name}}</p>
+                                <p class="chat-workspace-name" id="chat-workspace-name">{{channels[0].name}}</p>
                             {% else %}
-                                <p class="chat-workspace-name">Start Collaborating today!</p>
+                                <p class="chat-workspace-name" id="chat-workspace-name">Start Collaborating today!</p>
                             {% endif %}
                         </div>
                         <div class="chats d-flex flex-column" id="chats">
@@ -100,21 +100,6 @@
                                 </div>
                                 {% endif %}
                             {%endfor%}
-                          <!-- <div class="chatbubble chatbubble-left">
-                            <p>some message</p>
-                          </div>
-                          <div class="chatbubble chatbubble-right">
-                            <p>some message</p>
-                          </div>
-                          <div class="chatbubble chatbubble-left">
-                            <p>some message</p>
-                          </div>
-                          <div class="chatbubble chatbubble-right">
-                            <p>some message</p>
-                          </div>
-                          <div class="chatbubble chatbubble-right">
-                            <p>some message Lorem ipsum dolor sit amet consectetur adipisicing elit. Est nostrum, eaque fugiat laborum quibusdam cumque delectus possimus culpa veritatis id! Sapiente, deleniti architecto ullam culpa obcaecati placeat porro quisquam perspiciatis.</p>
-                          </div> -->
                         </div>
                         <div class="send-message-container">
                           <form action="">
@@ -129,13 +114,15 @@
                 <div class="col-md-2 profile-section">
                     <div class="card">
                         <img class="card-img-top" src="https://cdn5.vectorstock.com/i/1000x1000/20/74/woman-avatar-profile-vector-21372074.jpg" alt="Card image cap">
-                        <div class="card-body">
+                        <div class="card-body" id="card_body">
                           <h5 class="card-title" id="username">{{username}}</h5>
                           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                           <div class="btn-group">
-                            <a href="#" class="btn btn-primary mr-1">Logout</a>
+                            <a href="/logout" class="btn btn-primary mr-1">Logout</a>
                             <a href="#" class="btn btn-primary">Edit Profile</a>
                           </div>
+                          <a href="#" id="joinWorkspace" class="btn btn-primary mt-3">Join a Workspace</a>
+                          <div id="card_code"></div>
                         </div>
                       </div>
                 </div>
@@ -185,6 +172,26 @@
         </div>
     </div>
 
+    <div class="joinWorkspaceModal" id="joinWorkspaceModal">
+        <div class="heading-joinWorkspace">
+            <h5><span>teamwork</span> makes the dream work.</h5>
+        </div>
+        <div class="content-joinWorkspace">
+            <div class="joinWorkspaceImage">
+                <img src="../../static/images/Brainstorming session _Monochromatic.svg" alt="">
+            </div>
+            <div class="joinWorkspaceForm">
+                <form action="">
+                    <input type="text" placeholder="Workspace Name" id="joinWorkspaceNameInput">
+                    <input type="text" placeholder="Joining Code" id="workspaceUserid">
+                    <button class="btn btn-primary" id="joinWorkspaceButton">Join workspace!</button>
+                </form>
+                <div class="closeJoinWorkspace" id="closeJoinWorkspace">
+                    <p>Close</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
     <script src="{{ url_for('static',filename='js/socketIO.js') }}"></script>

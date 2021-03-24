@@ -1,9 +1,47 @@
 document.addEventListener('DOMContentLoaded', ()=>{
+    scrollDownChatWindow()
     var socket = io.connect('http://127.0.0.1:5000/' );
 
     socket.on('connect', function() {
         socket.emit('message',{data: 'I\'m connected!'});
+        var saved = document.getElementById('workspace-id-saved').innerHTML;
+        if (saved){
+            socket.emit('getWorkspaceName', {wid:saved});
+        }
     });
+
+    socket.on('error', data=>{
+        var username = document.getElementById('username');
+        if (data['username']== username.innerHTML){
+            alert(data['msg'])
+        }
+    })
+
+    socket.on('workspaceJoined', data=>{
+        var div = document.createElement("div");
+        var img = document.createElement("img");
+        var span = document.createElement("span");
+        span.classList.add('wid');
+        div.classList.add('workspace');
+        span.innerHTML = data['wid'];
+        img.src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5su_e5EULmaSR0GPr9PxMGcOVm22Tsg5Eyg&usqp=CAU";
+        img.classList.add('workspaceIcon');
+        div.appendChild(img);
+        div.appendChild(span);
+        var list = document.getElementById('workspaceList');
+        list.appendChild(div);
+        div.addEventListener('click',function(){
+            var saved = document.getElementById('workspace-id-saved');
+            console.log(this.childNodes)
+            saved.innerHTML=this.childNodes[1].innerHTML;
+            console.log(saved.innerHTML)
+            socket.emit('join',{wid: saved.innerHTML});
+            socket.emit('getChannels', {wid:saved.innerHTML});
+            socket.emit('getWorkspaceName', {wid:saved.innerHTML});
+        })
+        console.log(data['wid'])
+        socket.emit('join',{wid: data['wid']});
+    })
 
     socket.on('message', data => {
         if (data.wid == "1" && data.channel_id=="2"){
@@ -12,34 +50,41 @@ document.addEventListener('DOMContentLoaded', ()=>{
     });
 
     socket.on('receiveMessageJS', data=>{
-        var list = document.getElementById('chats');
-        removeAllChildNodes(list)
-        var chats = data['chats']
-        var username = document.getElementById('username').innerHTML
-        for (var i = 0; i < chats.length; i++){
-            if (username == chats[i][i].username){
-                var div = document.createElement("div");
-                var p = document.createElement("p");
-                div.classList.add('chatbubble');
-                div.classList.add('chatbubble-right');
-                p.innerHTML= chats[i][i].message
-                div.appendChild(p);
-                list.appendChild(div);
+        var channelid = document.getElementById('channel-id-saved').innerHTML;
+        if (data['channel_id']== channelid){
+            var heading = document.getElementById('chat-workspace-name')
+            heading.innerHTML = data['name']
+            var list = document.getElementById('chats');
+            removeAllChildNodes(list)
+            var chats = data['chats']
+            var username = document.getElementById('username').innerHTML
+            for (var i = 0; i < chats.length; i++){
+                if (username == chats[i][i].username){
+                    var div = document.createElement("div");
+                    var p = document.createElement("p");
+                    div.classList.add('chatbubble');
+                    div.classList.add('chatbubble-right');
+                    p.innerHTML= chats[i][i].message
+                    div.appendChild(p);
+                    list.appendChild(div);
+                }
+                else{
+                    var div = document.createElement("div");
+                    var p = document.createElement("p");
+                    var b = document.createElement("b");
+                    div.classList.add('chatbubble');
+                    div.classList.add('chatbubble-left');
+                    b.innerHTML =  chats[i][i].username
+                    p.innerHTML= chats[i][i].message
+                    div.appendChild(b)
+                    div.appendChild(p)
+                    list.appendChild(div);
+                }
             }
-            else{
-                var div = document.createElement("div");
-                var p = document.createElement("p");
-                var b = document.createElement("b");
-                div.classList.add('chatbubble');
-                div.classList.add('chatbubble-left');
-                b.innerHTML =  chats[i][i].username
-                p.innerHTML= chats[i][i].message
-                div.appendChild(b)
-                div.appendChild(p)
-                list.appendChild(div);
-            }
+            console.log(data)
+            scrollDownChatWindow()
         }
-        console.log(data)
+        
     })
 
     socket.on('receiveMessage', data=>{
@@ -74,13 +119,19 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 list.appendChild(div);
             }
         }
+        scrollDownChatWindow()
     })
 
     socket.on('changeWorkspaceName',data=>{
-        var heading = document.getElementById('channel-heading');
-        heading.innerHTML = data['name'];
         var saved = document.getElementById('workspace-id-saved');
         socket.emit('join',{wid: saved.innerHTML});
+        var code = document.getElementById('card_code');
+        var span = document.createElement("span");
+        console.log(data['joining_code'])
+        console.log("hello")
+        removeAllChildNodes(code)
+        span.innerHTML = data['joining_id']
+        code.appendChild(span)
     })
 
     socket.on('createWorkspaceJS', data => {
@@ -104,8 +155,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 console.log(saved.innerHTML)
                 socket.emit('join',{wid: saved.innerHTML});
                 socket.emit('getChannels', {wid:saved.innerHTML});
-                socket.emit('changeWorkspaceName', {wid:saved.innerHTML});
+                socket.emit('getWorkspaceName', {wid:saved.innerHTML});
             })
+            socket.emit('getWorkspaceName', {wid:saved.innerHTML});
             socket.emit('join',{wid: data['id']});
         }
     });
@@ -174,11 +226,25 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     var createWorkspaceButton = document.getElementById('createWorkspaceButton');
     var createChannelButton = document.getElementById('createChannelButton');
+    var joinWorkspaceButton = document.getElementById('joinWorkspaceButton');
     var sendMessage = document.getElementById('send-message');
     var chatMessageInput = document.getElementById('chatMessageInput');
     var workspaces = document.querySelectorAll('.wid');
     var channels = document.querySelectorAll('.cid');
     var username = document.getElementById('username');
+
+    joinWorkspaceButton.addEventListener('click', function(){
+        var joinWorkspaceNameInput = document.getElementById('joinWorkspaceNameInput');
+        var workspaceUserid = document.getElementById('workspaceUserid');
+        var username = document.getElementById('username');
+        var joinWorkspaceModal = document.getElementById('joinWorkspaceModal');
+        var blur = document.getElementById('blur');
+        socket.emit('joinWorkspace', {name:joinWorkspaceNameInput.value, code :workspaceUserid.value, username:username.innerHTML});
+        joinWorkspaceModal.classList.toggle('joinWorkspaceModalShow');
+        blur.classList.toggle('bluractive');
+        joinWorkspaceNameInput.value = "";
+        workspaceUserid.value="";
+    })
 
     createWorkspaceButton.addEventListener('click', function(){
         var workspaceNameInput = document.getElementById('workspaceNameInput');
@@ -221,8 +287,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
             saved.innerHTML=this.childNodes[3].innerHTML;
             console.log(saved.innerHTML)
             socket.emit('join',{wid: saved.innerHTML});
+            socket.emit('getWorkspaceName', {wid:saved.innerHTML});
             socket.emit('getChannels', {wid:saved.innerHTML});
-            socket.emit('changeWorkspaceName', {wid:saved.innerHTML});
             // console.log(this.childNodes[3].innerHTML)
             // console.log(saved.innerHTML)
         })
@@ -245,6 +311,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
         while (parent.firstChild) {
             parent.removeChild(parent.firstChild);
         }
+    }
+
+    function scrollDownChatWindow() {
+        const chatWindow = document.querySelector("#chats");
+        chatWindow.scrollTop = chatWindow.scrollHeight;
     }
 
 })

@@ -210,12 +210,12 @@
 
 .chatbubble-right{
     align-self: flex-end;
-    border-right: 2px solid var(--dark-color);
+    border-right: 3px solid var(--dark-color);
 }
 
 .chatbubble-left{
     align-self: flex-start;
-    border-left: 2px solid var(--dark-color);
+    border-left: 3px solid var(--dark-color);
 }
 
 .chats{
@@ -241,6 +241,7 @@
     background-color: var(--dark--white);
     margin: 0.5rem;
     padding: 0.5rem;
+    border-radius: 0.5rem;
 }
 
 .chat-section{
@@ -299,7 +300,7 @@
     pointer-events: none;
 }
 
-.createWorkspaceModal, .createChannelModal{
+.createWorkspaceModal, .createChannelModal, .joinWorkspaceModal{
     position: fixed;
     left: 50%;
     top: 50%;
@@ -321,30 +322,30 @@
     transition: 0.4s;
 }
 
-.content-createWorkspace, .content-createChannel{
+.content-createWorkspace, .content-createChannel, .content-joinWorkspace{
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 }
 
-.heading-createWorkspace, .heading-createChannel{
+.heading-createWorkspace, .heading-createChannel, .heading-joinWorkspace{
     width: 100%;
     align-items: flex-end;
 }
 
-.heading-createWorkspace h5, .heading-createChannel h5{
+.heading-createWorkspace h5, .heading-createChannel h5, .heading-joinWorkspace h5{
     color: var(--dark-color);
     width: 100%;
     font-size: 1.25rem;
     letter-spacing: 2px;
 }
 
-.heading-createWorkspace h5 span, .heading-createChannel h5 span{
+.heading-createWorkspace h5 span, .heading-createChannel h5 span, .heading-joinWorkspace h5 span{
     text-transform: uppercase;
 }
 
-.createWorkspaceModalShow, .createChannelModalShow{
+.createWorkspaceModalShow, .createChannelModalShow, .joinWorkspaceModalShow{
     visibility: visible;
     transform: translate(-50%, -50%);
     opacity: 1;
@@ -352,17 +353,17 @@
     text-align: end;
 }
 
-.createWorkspaceImage, .createChannelImage{
+.createWorkspaceImage, .createChannelImage, .joinWorkspaceImage{
     width: 100%;
 }
 
-.createWorkspaceImage img, .createChannelImage img{
+.createWorkspaceImage img, .createChannelImage img, .joinWorkspaceImage img{
     width: 100%;
     height: auto;
     transition: 0.4s;
 }
 
-.createWorkspaceForm, .createChannelForm{
+.createWorkspaceForm, .createChannelForm, .joinWorkspaceForm{
     width: 75%;
     display: flex;
     flex-direction: column;
@@ -371,6 +372,7 @@
 }
 
 .createWorkspaceForm input,
+.joinWorkspaceForm input,
 .createChannelForm input{
     outline: none;
     border: none;
@@ -382,6 +384,7 @@
 }
 
 .createWorkspaceForm button,
+.joinWorkspaceForm button,
 .createChannelForm button{
     background-color: var(--dark-color);
     outline: none;
@@ -392,17 +395,20 @@
 }
 
 .createWorkspaceForm button:hover,
+.joinWorkspaceForm button:hover,
 .createChannelForm button:hover{
     transform: scale(1.05,1.05);
     background-color: var(--dark-color);
 }
 
 .createWorkspaceImage img:hover,
+.joinWorkspaceImage img:hover,
 .createChannelImage img:hover{
     transform: scale(1.05,1.05);
 }
 
 .closeCreateWorkspace p,
+.closeJoinWorkspace p,
 .closeCreateChannel p{
     color: var(--white-color);
     text-align: end;
@@ -412,7 +418,7 @@
     margin-left: 0.5rem;
 }
 
-.closeCreateWorkspace, .closeCreateChannel{
+.closeCreateWorkspace, .closeCreateChannel, .closeJoinWorkspace{
     color: var(--white-color);
     text-align: end;
     font-size: small;

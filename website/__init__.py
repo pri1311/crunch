@@ -2,7 +2,8 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, LoginManager
 from werkzeug.security import generate_password_hash, check_password_hash
-
+import random  
+import string
 
 import os
 # init SQLAlchemy so we can use it later in our models
@@ -37,13 +38,14 @@ class Workspace(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), index=True)
     admin_username = db.Column(db.String(80), index=True)
-    
+    joining_code = db.Column(db.String(10))
 
     def getJsonData(self):
         return {
             "id": self.id,
             "name": self.name,
             "admin_username": self.admin_username,
+            "joining_code": self.joining_code,
         }
 
 

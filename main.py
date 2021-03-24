@@ -2,6 +2,8 @@ from website import create_app,db,Workspace, User, Channel, Chats
 from flask_socketio import SocketIO, send, emit, join_room
 from flask import session
 from flask_login import login_user, logout_user, login_required, current_user
+import random  
+import string
 
 app = create_app()
 
@@ -28,6 +30,8 @@ def handle_createWorkspace(data):
     w = Workspace()
     w.admin_username = data['username']
     w.name = data['name']
+    joining_code = random_string(4,2)
+    w.joining_code = joining_code
     db.session.add(w)
     db.session.commit()
     room = Workspace.query.filter_by(name = data['name']).first()
@@ -42,7 +46,8 @@ def handle_createWorkspace(data):
     data = {
         "name":data['name'],
         "admin_username": data['username'],
-        "id": room.id,
+        "id": room.id, 
+        "joining_code": joining_code,
     }
     emit('createWorkspaceJS',data, broadcast=True)
 
@@ -55,11 +60,11 @@ def handle_createChannel(data):
     room = Workspace.query.filter_by(id = data['wid']).first()
     db.session.add(c)
     db.session.commit()
-    room = Workspace.query.filter_by(id = data['wid']).first()
+    channel = Channel.query.filter_by(name = data['name']).first()
     data = {
         "name":data['name'],
         "admin_username": data['username'],
-        "id": room.id,
+        "id": channel.id,
         "wid":data['wid'],
     }
     emit('createChannelJS',data, room=room.name, broadcast= True)
@@ -69,7 +74,7 @@ def joinRoom(data):
     if (data['wid']):
         room = Workspace.query.filter_by(id = data['wid']).first()
         join_room(room.name)
-    else:
+    elif (data['name']):
         join_room(data['name'])   
 
 @socketio.on('getChannels')
@@ -93,8 +98,10 @@ def sendChannels(data):
 @socketio.on('getWorkspaceName')
 def get_workspaceName(data):
     wid = data['wid']
+    print(wid)
     room = Workspace.query.filter_by(id = wid).first()
-    emit('changeWorkspaceName', {"name":room.name})
+    print("hello",room.joining_code)
+    emit('changeWorkspaceName', {"name":room.name, "joining_id" :room.joining_code})
 
 @socketio.on('chatmsg')
 def chat_msg(data):
@@ -114,6 +121,7 @@ def chat_msg(data):
 @socketio.on('getMessages')
 def sendMessages(data):
     chats = Chats.query.filter_by(wid = data['wid'], channel_id = data['channel_id']).all()
+    channel = Channel.query.filter_by(id = data['channel_id']).first()
     chatscount = len(chats)
     i = 0
     ch = []
@@ -129,7 +137,38 @@ def sendMessages(data):
             'channel_id': c.channel_id,
         }})
         i = i + 1
-    emit('receiveMessageJS', {"chats":ch}, broadcast= True, room=room.name)
+    emit('receiveMessageJS', {"chats":ch, "channel_id":data['channel_id'], "name":channel.name}, broadcast= True, room=room.name)
+
+@socketio.on('joinWorkspace')
+def addWorkspace(data):
+    user = User.query.filter_by(name = data['username']).first()
+    if Workspace.query.filter_by(name = data['name'], joining_code=data['code']).count() == 1:
+        join_room(data['name'])
+        if user.workspace_list:
+            room = Workspace.query.filter_by(name = data['name'],).first()
+            join_room(room.name)
+            wlist = user.workspace_list.split()
+            wlist = [int(i) for i in wlist]
+            wid = room.id
+            if wid in wlist:
+                emit('error', {"msg":"You have already joined the workspace!", "username":data['username']}, room = room.name)
+            else:
+                user.workspace_list = user.workspace_list + str(room.id) + " "
+                emit('workspaceJoined', {"wid": room.id}, room = room.name)
+        else:
+            room = Workspace.query.filter_by(name = data['name'],).first()
+            user.workspace_list = str(room.id) +" "
+            emit('workspaceJoined', {"wid": room.id}, room = room.name)
+    db.session.commit()
+
+def random_string(letter_count, digit_count):  
+    str1 = ''.join((random.choice(string.ascii_letters) for x in range(letter_count)))  
+    str1 += ''.join((random.choice(string.digits) for x in range(digit_count)))  
+  
+    sam_list = list(str1) # it converts the string to list.  
+    random.shuffle(sam_list) # It uses a random.shuffle() function to shuffle the string.  
+    final_string = ''.join(sam_list)  
+    return final_string 
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)
