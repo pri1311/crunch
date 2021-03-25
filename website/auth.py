@@ -23,7 +23,7 @@ def signup_post():
         email = request.form.get('email')
         name = request.form.get('name')
         password = request.form.get('password')
-<<<<<<< Updated upstream
+
         # print(request.form.get('image'))
         # upload_result = uploader.upload(request.form.get('image'))
         # # image = Cloud.CloudinaryImage(request.form.get('image'))
@@ -34,7 +34,7 @@ def signup_post():
         #             width=100,
         #             height=100)
         # print(image)
-=======
+
         file_to_upload = request.files['file']
         if file_to_upload:
             upload_result = upload(file_to_upload)
@@ -45,7 +45,6 @@ def signup_post():
                 width=100,
                 height=100)
 
->>>>>>> Stashed changes
         if not password or not email or not name:
             error = "Invalid Credentials. Please try again."
             return render_template("/auth/login-register.html", error=error)
