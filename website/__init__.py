@@ -39,7 +39,7 @@ class Workspace(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), index=True)
     admin_username = db.Column(db.String(80), index=True)
-    profile_url = db.Column(db.String(120))
+
     joining_code = db.Column(db.String(10))
 
     def getJsonData(self):
