@@ -90,12 +90,20 @@
                             {%for i in range(0, chatscount)%} 
                                 {% if chats[i].username == username %}
                                 <div class="chatbubble chatbubble-right">
-                                    <p>{{chats[i].message}}</p>
+                                    {% if chats[i].image == 0 %}
+                                        <p>{{chats[i].message}}</p>
+                                    {% else %}
+                                        <img src="{{chats[i].message}}" alt="">
+                                    {% endif %}
                                 </div>
                                 {% else %}
                                 <div class="chatbubble chatbubble-left">
                                     <b>{{chats[i].username}}</b>
-                                    <p>{{chats[i].message}}</p>
+                                    {% if chats[i].image == 0 %}
+                                        <p>{{chats[i].message}}</p>
+                                    {% else %}
+                                        <img src="{{chats[i].message}}" alt="">
+                                    {% endif %}
                                 </div>
                                 {% endif %}
                             {%endfor%}
@@ -105,14 +113,22 @@
                             <input id="chatMessageInput" class="message-input" type="text" placeholder="Type a message...">
                           </form>
                           <a href="#" id="send-message" class="send-message chat-buttons"><i class="fas fa-paper-plane"></i></a>
-                          <a href="#" id="send-image" class="send-image chat-buttons"><i class="fas fa-camera-retro"></i></a>
+                          <form action="/imageUploadChat" method="POST" id="imageForm" enctype="multipart/form-data">
+                            <label for="file-upload" id="send-image" class="custom-file-upload send-image chat-buttons">
+                                <i class="fas fa-camera-retro"></i>
+                               </label>
+                               <input style="display: none;" id="file-upload" type="file" name="image"/>
+                               <input style="display: none;" type="text" value="" name="imagewid" id="imagewid">
+                               <input style="display: none;" type="text" value="" name="imagecid" id="imagecid">
+                               <input style="display: none;" type="text" value="" name="imageusername" id="imageusername">
+                          </form>
                           <a href="#" id="voice-message" class="voice-message chat-buttons"><i class="fas fa-microphone-alt"></i></a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-2 profile-section">
                     <div class="card">
-                        <img class="card-img-top" src="../../static/images/Brainstorming session _Monochromatic.svg" alt="Card image cap">
+                        <img class="card-img-top" src="{{image}}" alt="Card image cap">
                         <div class="card-body" id="card_body">
                           <h5 class="card-title" id="username">{{username}}</h5>
                           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -192,9 +208,14 @@
         </div>
     </div>
 
+    <!--===== SCROLL REVEAL =====-->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
     <script src="{{ url_for('static',filename='js/socketIO.js') }}"></script>
     <!-- <script src="{{ url_for('static',filename='js/nav.js') }}"></script> -->
     <script src="{{ url_for('static',filename='js/chat.js') }}"></script>
 </body>
+
+
 </html>

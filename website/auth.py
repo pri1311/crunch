@@ -21,16 +21,18 @@ def signup_post():
         email = request.form.get('email')
         name = request.form.get('name')
         password = request.form.get('password')
-        # print(request.form.get('image'))
-        # upload_result = uploader.upload(request.form.get('image'))
-        # # image = Cloud.CloudinaryImage(request.form.get('image'))
-        # thumbnail_url1, options = cloudinary_url(
-        #             upload_result['public_id'],
-        #             format="jpg",
-        #             crop="fill",
-        #             width=100,
-        #             height=100)
-        # print(image)
+        image = request.files['image']
+        if image:
+            upload_result = uploader.upload(image)
+            # image = Cloud.CloudinaryImage(request.form.get('image'))
+            thumbnail_url1, options = cloudinary_url(
+                        upload_result['public_id'],
+                        crop="fill",
+                        width=100,
+                        height=100)
+        else:
+            thumbnail_url1 = 'https://png.pngitem.com/pimgs/s/150-1503945_transparent-user-png-default-user-image-png-png.png'                
+        
         if not password or not email or not name:
             error = "Invalid Credentials. Please try again."
             return render_template("/auth/login-register.html", error=error)
@@ -43,11 +45,10 @@ def signup_post():
             error = "Email already taken. Please try again."
             return render_template("/auth/login-register.html", error=error)
 
-        # session['username'] = name
         u = User()
         u.name = name
         u.email = email
-        # u.image = thumbnail_url1
+        u.image = thumbnail_url1
         u.set_password(password)
         session['username'] = name
         db.session.add(u)

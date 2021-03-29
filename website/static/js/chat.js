@@ -43,3 +43,23 @@ closeCreateChannel.addEventListener("click", function(){
     createChannelModal.classList.toggle('createChannelModalShow');
     blur.classList.toggle('bluractive');
 });
+
+/*===== SCROLL REVEAL ANIMATION =====*/
+const sr = ScrollReveal({
+    origin: 'top',
+    distance: '80px',
+    duration: 2000,
+    reset: true
+})
+
+
+/*===== SCROLL REVEAL ANIMATION-CARDS =====*/
+sr.reveal('.createWorkspace', {})
+sr.reveal('.createChannel', {})
+sr.reveal('.card', {})
+sr.reveal('.chat-workspace-name', {delay: 100})
+sr.reveal('.channel-heading', {delay: 100})
+sr.reveal('.workspace', {delay: 200})
+sr.reveal('.channel', {delay: 200})
+sr.reveal('.card-body', {delay: 200})
+sr.reveal('.send-message-container', {delay: 400})

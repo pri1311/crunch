@@ -17,33 +17,75 @@ document.addEventListener('DOMContentLoaded', ()=>{
         }
     })
 
+    socket.on('receiveimage', data=>{
+        console.log(data)
+        var saved = document.getElementById('workspace-id-saved').innerHTML;
+        var channelid = document.getElementById('channel-id-saved').innerHTML;
+        var username = document.getElementById('username').innerHTML
+        if (data['channel_id'].toString() == channelid.toString() && data['wid'].toString()==saved.toString()){
+            console.log(data)
+            var list = document.getElementById('chats');
+            list.classList.add('chats')
+            list.classList.add('flex-column')
+            list.classList.add('d-flex')
+            if (username == data['username']){
+                var div = document.createElement("div");
+                var img = document.createElement("img");
+                div.classList.add('chatbubble');
+                div.classList.add('chatbubble-right');
+                img.setAttribute("src", data['message'])
+                div.appendChild(img);
+                list.appendChild(div);
+            }
+            else{
+                console.log(data)
+                var div = document.createElement("div");
+                var img = document.createElement("img");
+                var b = document.createElement("b");
+                div.classList.add('chatbubble');
+                div.classList.add('chatbubble-left');
+                b.innerHTML = data['username']
+                div.appendChild(b)
+                img.setAttribute("src", data['message'])
+                div.appendChild(img);
+                list.appendChild(div);
+            }
+        }
+        scrollDownChatWindow()
+    })
+
     socket.on('workspaceJoined', data=>{
-        var div = document.createElement("div");
-        var img = document.createElement("img");
-        var span = document.createElement("span");
-        span.classList.add('wid');
-        div.classList.add('workspace');
-        div.setAttribute("data-toggle", "tooltip");
-        div.setAttribute("data-placement", "right");
-        div.setAttribute("title",data['name'] )
-        span.innerHTML = data['wid'];
-        img.src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5su_e5EULmaSR0GPr9PxMGcOVm22Tsg5Eyg&usqp=CAU";
-        img.classList.add('workspaceIcon');
-        div.appendChild(img);
-        div.appendChild(span);
-        var list = document.getElementById('workspaceList');
-        list.appendChild(div);
-        div.addEventListener('click',function(){
-            var saved = document.getElementById('workspace-id-saved');
-            console.log(this.childNodes)
-            saved.innerHTML=this.childNodes[1].innerHTML;
-            console.log(saved.innerHTML)
-            socket.emit('join',{wid: saved.innerHTML});
-            socket.emit('getChannels', {wid:saved.innerHTML});
-            socket.emit('getWorkspaceName', {wid:saved.innerHTML});
-        })
-        console.log(data['wid'])
-        socket.emit('join',{wid: data['wid']});
+        var username = document.getElementById('username');
+        console.log(username.innerHTML)
+        console.log(data['username'])
+        if (data['username'] == username.innerHTML){
+            var div = document.createElement("div");
+            var img = document.createElement("img");
+            var span = document.createElement("span");
+            span.classList.add('wid');
+            div.classList.add('workspace');
+            div.setAttribute("data-toggle", "tooltip");
+            div.setAttribute("data-placement", "right");
+            div.setAttribute("title",data['name'] )
+            span.innerHTML = data['wid'];
+            img.src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5su_e5EULmaSR0GPr9PxMGcOVm22Tsg5Eyg&usqp=CAU";
+            img.classList.add('workspaceIcon');
+            div.appendChild(img);
+            div.appendChild(span);
+            var list = document.getElementById('workspaceList');
+            list.appendChild(div);
+            div.addEventListener('click',function(){
+                var saved = document.getElementById('workspace-id-saved');
+                console.log(this.childNodes)
+                saved.innerHTML=this.childNodes[1].innerHTML;
+                console.log(saved.innerHTML)
+                socket.emit('join',{wid: saved.innerHTML});
+                socket.emit('getChannels', {wid:saved.innerHTML});
+                socket.emit('getWorkspaceName', {wid:saved.innerHTML});
+            })
+            console.log(data['wid'])
+            socket.emit('join',{wid: data['wid']});
+        }
     })
 
     socket.on('message', data => {
@@ -63,25 +105,50 @@ document.addEventListener('DOMContentLoaded', ()=>{
             var username = document.getElementById('username').innerHTML
             for (var i = 0; i < chats.length; i++){
                 if (username == chats[i][i].username){
-                    var div = document.createElement("div");
-                    var p = document.createElement("p");
-                    div.classList.add('chatbubble');
-                    div.classList.add('chatbubble-right');
-                    p.innerHTML= chats[i][i].message
-                    div.appendChild(p);
-                    list.appendChild(div);
+                    if (chats[i][i].image == 0){
+                        var div = document.createElement("div");
+                        var p = document.createElement("p");
+                        div.classList.add('chatbubble');
+                        div.classList.add('chatbubble-right');
+                        p.innerHTML= chats[i][i].message
+                        div.appendChild(p);
+                        list.appendChild(div);
+                    }
+                    else if (chats[i][i].image == 1){
+                        var div = document.createElement("div");
+                        var img = document.createElement("img");
+                        div.classList.add('chatbubble');
+                        div.classList.add('chatbubble-right');
+                        img.setAttribute("src", chats[i][i].message)
+                        div.appendChild(img);
+                        list.appendChild(div);
+                    }
                 }
                 else{
-                    var div = document.createElement("div");
-                    var p = document.createElement("p");
-                    var b = document.createElement("b");
-                    div.classList.add('chatbubble');
-                    div.classList.add('chatbubble-left');
-                    b.innerHTML =  chats[i][i].username
-                    p.innerHTML= chats[i][i].message
-                    div.appendChild(b)
-                    div.appendChild(p)
-                    list.appendChild(div);
+                    if (chats[i][i].image == 0){
+                        var div = document.createElement("div");
+                        var p = document.createElement("p");
+                        var b = document.createElement("b");
+                        div.classList.add('chatbubble');
+                        div.classList.add('chatbubble-left');
+                        b.innerHTML =  chats[i][i].username
+                        p.innerHTML= chats[i][i].message
+                        div.appendChild(b)
+                        div.appendChild(p)
+                        list.appendChild(div);
+                    }
+                    else if (chats[i][i].image == 1){
+                        var div = document.createElement("div");
+                        var img = document.createElement("img");
+                        var b = document.createElement("b");
+                        div.classList.add('chatbubble');
+                        div.classList.add('chatbubble-left');
+                        b.innerHTML = chats[i][i].username
+                        div.appendChild(b)
+                        img.setAttribute("src", chats[i][i].message)
+                        div.appendChild(img);
+                        list.appendChild(div);
+                    }
                 }
             }
             console.log(data)
@@ -101,25 +168,50 @@ document.addEventListener('DOMContentLoaded', ()=>{
             list.classList.add('flex-column')
             list.classList.add('d-flex')
             if (username == data['username']){
-                var div = document.createElement("div");
-                var p = document.createElement("p");
-                div.classList.add('chatbubble');
-                div.classList.add('chatbubble-right');
-                p.innerHTML= data['msg']
-                div.appendChild(p);
-                list.appendChild(div);
+                if (data['image'] == 0){
+                    var div = document.createElement("div");
+                    var p = document.createElement("p");
+                    div.classList.add('chatbubble');
+                    div.classList.add('chatbubble-right');
+                    p.innerHTML= data['msg']
+                    div.appendChild(p);
+                    list.appendChild(div);
+                }
+                else if (data['image'] == 1){
+                    var div = document.createElement("div");
+                    var img = document.createElement("img");
+                    div.classList.add('chatbubble');
+                    div.classList.add('chatbubble-right');
+                    img.setAttribute("src", data['message'])
+                    div.appendChild(img);
+                    list.appendChild(div);
+                }
             }
             else{
-                var div = document.createElement("div");
-                var p = document.createElement("p");
-                var b = document.createElement("b");
-                div.classList.add('chatbubble');
-                div.classList.add('chatbubble-left');
-                b.innerHTML = data['username']
-                p.innerHTML= data['msg']
-                div.appendChild(b)
-                div.appendChild(p)
-                list.appendChild(div);
+                if (data['image'] == 0){
+                    var div = document.createElement("div");
+                    var p = document.createElement("p");
+                    var b = document.createElement("b");
+                    div.classList.add('chatbubble');
+                    div.classList.add('chatbubble-left');
+                    b.innerHTML = data['username']
+                    p.innerHTML= data['msg']
+                    div.appendChild(b)
+                    div.appendChild(p)
+                    list.appendChild(div);                
+                }
+                else if (data['image'] == 1){
+                    var div = document.createElement("div");
+                    var img = document.createElement("img");
+                    var b = document.createElement("b");
+                    div.classList.add('chatbubble');
+                    div.classList.add('chatbubble-left');
+                    b.innerHTML = data['username']
+                    div.appendChild(b)
+                    img.setAttribute("src", data['message'])
+                    div.appendChild(img);
+                    list.appendChild(div);                    
+                }
             }
         }
         scrollDownChatWindow()
@@ -164,7 +256,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 socket.emit('getChannels', {wid:saved.innerHTML});
                 socket.emit('getWorkspaceName', {wid:saved.innerHTML});
             })
-            socket.emit('getWorkspaceName', {wid:saved.innerHTML});
             socket.emit('join',{wid: data['id']});
         }
     });
@@ -239,6 +330,29 @@ document.addEventListener('DOMContentLoaded', ()=>{
     var workspaces = document.querySelectorAll('.wid');
     var channels = document.querySelectorAll('.cid');
     var username = document.getElementById('username');
+    var imageForm = document.getElementById('file-upload');
+    var sendImage = document.getElementById('send-image');
+
+    imageForm.addEventListener('change', function(){
+        var saved = document.getElementById('workspace-id-saved').innerHTML;
+        var channelid = document.getElementById('channel-id-saved').innerHTML;
+        var username = document.getElementById('username').innerHTML
+        var imagewid = document.getElementById('imagewid');
+        var imagecid = document.getElementById('imagecid');
+        var imageusername = document.getElementById('imageusername');
+        var file = document.getElementById('file-upload');
+        imagewid.value = saved;
+        imagecid.value = channelid;
+        imageusername.value = username;
+        socket.emit('join',{wid: saved});
+        console.log(file.value)
+        document.getElementById('imageForm').submit()
+        setTimeout(() => { socket.emit('sendimage', {"msg":"get image"}) }, 1000);
+    })
+
+    sendImage.addEventListener('click',function(){
+        
+    })
 
     joinWorkspaceButton.addEventListener('click', function(){
         var joinWorkspaceNameInput = document.getElementById('joinWorkspaceNameInput');

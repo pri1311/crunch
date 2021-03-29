@@ -4,18 +4,37 @@ from flask import session
 from flask_login import login_user, logout_user, login_required, current_user
 import random  
 import string
-from flask import Blueprint, render_template, session
+from flask import Blueprint, render_template, session, redirect, request
 import cloudinary as Cloud
+from cloudinary import uploader
+from cloudinary.utils import cloudinary_url
 
 app = create_app()
 
 socketio = SocketIO(app,logger=True, engineio_logger=True)
 
-Cloud.config.update = ({
-    'cloud_name':'xyz123456789xyz',
-    'api_key': '881914523258343',
-    'api_secret': 't5p0GTrAArAQGyj2YJUpg3RUeCM'
-})
+Cloud.config( 
+  cloud_name = "xyz123456789xyz", 
+  api_key = "881914523258343", 
+  api_secret = "t5p0GTrAArAQGyj2YJUpg3RUeCM" 
+)
+
+@socketio.on('sendimage')
+def sendimage(data):
+    print("hello")
+    if Chats.query.filter_by(id = session['imageid']).count() == 1:
+        i = Chats.query.filter_by(id = session['imageid']).first()
+        c = Chats.query.filter_by(message = i.message).first()
+        session['imageid'] = -1
+        data = {
+            'id': c.id,
+            'message': c.message,
+            'username': c.username,
+            'wid':c.wid,
+            'channel_id': c.channel_id,
+            'image': True
+        }
+        emit('receiveimage', data, room = session['name'] )
 
 @socketio.on('message')
 def handle_message(data):
@@ -118,6 +137,7 @@ def chat_msg(data):
     c.username = data['username']
     c.wid = data['wid']
     c.channel_id = data['channel_id']
+    c.image = 0
     db.session.add(c)
     db.session.commit()
     print(c)
@@ -143,6 +163,7 @@ def sendMessages(data):
             'username': c.username,
             'wid':c.wid,
             'channel_id': c.channel_id,
+            'image':c.image
         }})
         i = i + 1
     emit('receiveMessageJS', {"chats":ch, "channel_id":data['channel_id'], "name":channel.name}, broadcast= True, room=room.name)
@@ -162,11 +183,11 @@ def addWorkspace(data):
                 emit('error', {"msg":"You have already joined the workspace!", "username":data['username']}, room = room.name)
             else:
                 user.workspace_list = user.workspace_list + str(room.id) + " "
-                emit('workspaceJoined', {"wid": room.id}, room = room.name)
+                emit('workspaceJoined', {"wid": room.id, "username":data['username'], "name": room.name,}, room = room.name)
         else:
             room = Workspace.query.filter_by(name = data['name'],).first()
             user.workspace_list = str(room.id) +" "
-            emit('workspaceJoined', {"wid": room.id, "name": room.name}, room = room.name)
+            emit('workspaceJoined', {"wid": room.id, "name": room.name, "username":data['username']}, room = room.name)
     db.session.commit()
 
 def random_string(letter_count, digit_count):  
@@ -182,7 +203,7 @@ def random_string(letter_count, digit_count):
   
 # inbuilt function which takes error as parameter
 def not_found(e):
-  return render_template("/auth/login-register.html")
+  return render_template("/views/404.html")
 
 @app.errorhandler(404)
   

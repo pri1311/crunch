@@ -36,7 +36,8 @@ body{
     margin: var(--header-height) 0 0 0;
     /* padding: 1rem 1rem 0; */
     font-size: var(--normal-font-size);
-    background-color: var(--dark--white);
+    background-color: black;
+    background-color: var(--first-color);
     color: var(--white-color);
     align-items: center;
     justify-content: center;
@@ -69,6 +70,8 @@ img{
     margin-left: 1rem;
     margin-top: 0.5rem;
     background-color: var(--first-color);
+    box-shadow: inset 5px 5px 10px #070707,
+            inset -5px -5px 10px #1d1d1d;
     /* border-radius: 1rem; */
 }
 

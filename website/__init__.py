@@ -74,6 +74,7 @@ class Chats(db.Model):
     username = db.Column(db.String(80), index=True)
     wid = db.Column(db.Integer, index=True)
     channel_id = db.Column(db.Integer, index=True)
+    image = db.Column(db.Integer)
 
     def getJsonData(self):
         return {
