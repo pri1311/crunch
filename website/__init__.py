@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, LoginManager
 from werkzeug.security import generate_password_hash, check_password_hash
-import random  
+import random
 import string
 
 import os
@@ -39,6 +39,7 @@ class Workspace(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), index=True)
     admin_username = db.Column(db.String(80), index=True)
+
     joining_code = db.Column(db.String(10))
 
     def getJsonData(self):
@@ -65,7 +66,6 @@ class Channel(db.Model):
             "workspace_id": self.wid,
         }
 
-    
 
 class Chats(db.Model):
 
@@ -103,6 +103,7 @@ def create_app():
         login_manager.login_view = 'auth.login_post'
         login_manager.init_app(app)
         db.create_all()
+
         @login_manager.user_loader
         def load_user(user_id):
             # since the user_id is just the primary key of our user table, use it in the query for the user

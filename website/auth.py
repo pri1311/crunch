@@ -3,21 +3,23 @@ from flask_login import login_user, logout_user, login_required
 from . import db
 from .__init__ import User
 import cloudinary as Cloud
-from cloudinary import uploader
+from cloudinary.uploader import upload
 from cloudinary.utils import cloudinary_url
 
 auth = Blueprint('auth', __name__)
 
-Cloud.config( 
-  cloud_name = "xyz123456789xyz", 
-  api_key = "881914523258343", 
-  api_secret = "t5p0GTrAArAQGyj2YJUpg3RUeCM" 
+Cloud.config(
+    cloud_name="xyz123456789xyz",
+    api_key="881914523258343",
+    api_secret="t5p0GTrAArAQGyj2YJUpg3RUeCM"
 )
+
 
 @auth.route('/signup', methods=['POST', 'GET'])
 def signup_post():
     if request.method == 'POST':
         error = None
+        thumbnail_url1 = None
         email = request.form.get('email')
         name = request.form.get('name')
         password = request.form.get('password')
@@ -52,8 +54,8 @@ def signup_post():
         u.set_password(password)
         session['username'] = name
         db.session.add(u)
-        db.session.commit()    
-                
+        db.session.commit()
+
         return redirect(url_for('views.chat'))
     else:
         return render_template("/auth/login-register.html")
@@ -72,9 +74,9 @@ def login_post():
 
     user = User.query.filter_by(name=name).first()
     if user is None or not user.check_password(password):
-        error="Please check your login details and try again."
-        return render_template("/auth/login-register.html",error=error)
-        
+        error = "Please check your login details and try again."
+        return render_template("/auth/login-register.html", error=error)
+
     session.pop('username', None)
     login_user(user, remember=remember)
     return redirect(url_for('views.chat'))
