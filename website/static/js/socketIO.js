@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', ()=>{
     scrollDownChatWindow()
-    var socket = io.connect('http://127.0.0.1:5000/' );
+    var socket = io.connect('http://127.0.0.1:3000/' );
 
     socket.on('connect', function() {
         socket.emit('message',{data: 'I\'m connected!'});
@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
             div.setAttribute("data-placement", "right");
             div.setAttribute("title",data['name'] )
             span.innerHTML = data['wid'];
-                var list = document.getElementById('workspaceList');
+            var list = document.getElementById('workspaceList');
             list.appendChild(div);
             div.addEventListener('click',function(){
                 var saved = document.getElementById('workspace-id-saved');

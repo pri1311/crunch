@@ -14,6 +14,10 @@ Cloud.config(
 )
 
 @views.route('/')
+def landing_page():
+    return render_template("/views/landingPage.html")
+
+@views.route('/authorization')
 def main_page():
     return render_template("/auth/login-register.html")
 
