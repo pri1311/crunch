@@ -266,6 +266,8 @@
 }
 
 .chatbubble{
+    display: flex;
+    flex-direction: column;
     min-width: 30%;
     max-width: 75%;
     background-color: var(--first-color);

@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', ()=>{
     scrollDownChatWindow()
-    var socket = io.connect('https://xyz-w.herokuapp.com/' );
+    var socket = io.connect('http://127.0.0.1:5000/' );
 
     socket.on('connect', function() {
         socket.emit('message',{data: 'I\'m connected!'});
@@ -163,12 +163,15 @@ document.addEventListener('DOMContentLoaded', ()=>{
         var channelid = document.getElementById('channel-id-saved').innerHTML;
         var username = document.getElementById('username').innerHTML
         if (data['channel_id'].toString() == channelid.toString() && data['wid'].toString()==saved.toString()){
+            console.log(data)
             var list = document.getElementById('chats');
             list.classList.add('chats')
             list.classList.add('flex-column')
             list.classList.add('d-flex')
             if (username == data['username']){
-                if (data['image'] == 0){
+                console.log(data)
+                if (data['image'] == 0 || data['image'] == "0"){
+                    console.log(data)
                     var div = document.createElement("div");
                     var p = document.createElement("p");
                     div.classList.add('chatbubble');
@@ -188,7 +191,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 }
             }
             else{
-                if (data['image'] == 0){
+                if (data['image'] == 0 || data['image'] == "0"){
+                    console.log(data)
                     var div = document.createElement("div");
                     var p = document.createElement("p");
                     var b = document.createElement("b");

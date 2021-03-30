@@ -32,9 +32,12 @@ def sendimage(data):
             'username': c.username,
             'wid':c.wid,
             'channel_id': c.channel_id,
-            'image': True
+            'image': 1
         }
-        emit('receiveimage', data, room = session['name'] )
+        room = Workspace.query.filter_by(id = c.wid).first()
+        join_room(room.name)
+        emit('receiveMessage', data, broadcast= True, room=room.name)
+        # emit('receiveimage', data, room = session['name'] )
 
 @socketio.on('message')
 def handle_message(data):
@@ -138,6 +141,7 @@ def chat_msg(data):
     c.wid = data['wid']
     c.channel_id = data['channel_id']
     c.image = 0
+    data['image'] = 0
     db.session.add(c)
     db.session.commit()
     print(c)
