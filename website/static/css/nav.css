@@ -256,16 +256,27 @@ img{
     left: 0;
 }
 
-@media screen and (max-width: 320px){
-    .header-search{
-        width: 70%;
+@media screen and (max-width: 768px){
+    
+    
+    .send-message-container form{
+        min-width: 75%;
+        width: 90%;
+        margin-right: 2rems;
     }
 }
+
+
 
 @media screen and (min-width: 768px){
     body{
         padding: 0rem 0rem 0 0rem;
         overflow: hidden;
+    }
+
+    .send-message-container form{
+        width: 90%;
+        margin-right: 2rems;
     }
 
     .header{

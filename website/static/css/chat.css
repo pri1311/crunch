@@ -266,6 +266,7 @@
 }
 
 .chatbubble{
+    word-wrap: break-word;
     display: flex;
     flex-direction: column;
     min-width: 30%;
@@ -308,7 +309,7 @@ box-shadow:  5px 5px 10px #070707,
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
+    justify-content: end;
     background-color: var(--dark--white);
     border-radius: 1rem;
     margin-bottom: 0.5rem;
@@ -317,10 +318,6 @@ box-shadow: inset 5px 5px 10px #1e1e1e,
             inset -5px -5px 10px #343434;
 }
 
-.send-message-container form{
-    width: 75%;
-    margin-right: 2rems;
-}
 
 .send-message-container:placeholder{
     color: var(--first-color);
@@ -337,14 +334,10 @@ box-shadow: inset 5px 5px 10px #1e1e1e,
 }
 
 #imageForm{
-    max-width: 5%;
-    align-items: center;
-    padding: 0;
-}
-
-#imageForm{
     margin: 0;
     padding: 0;
+    max-width: 5%;
+    align-items: center;
 }
 
 .cid, .wid{
