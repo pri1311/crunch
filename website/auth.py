@@ -3,7 +3,7 @@ from flask_login import login_user, logout_user, login_required
 from . import db
 from .__init__ import User
 import cloudinary as Cloud
-from cloudinary.uploader import upload
+from cloudinary import uploader
 from cloudinary.utils import cloudinary_url
 
 auth = Blueprint('auth', __name__)
@@ -29,9 +29,7 @@ def signup_post():
             # image = Cloud.CloudinaryImage(request.form.get('image'))
             thumbnail_url1, options = cloudinary_url(
                         upload_result['public_id'],
-                        crop="fill",
-                        width=100,
-                        height=100)
+                        crop="fill",)
         else:
             thumbnail_url1 = 'https://png.pngitem.com/pimgs/s/150-1503945_transparent-user-png-default-user-image-png-png.png'                
         
