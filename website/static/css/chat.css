@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400;500;600&display=swap');
+
 :root{
     --first-color: #121212;
     --white-color: #acacac;
@@ -21,12 +23,15 @@
 }
 
 .chat-page{
-    height: 90vh;
-    margin: 1rem;
-    margin-top: 5rem;
+    height: 100vh;
+    /* margin: 1rem; */
+    /* margin-top: 5rem; */
     justify-content: space-between;
     /* border-radius: 1rem; */
     /* margin-top: 3.5rem; */
+    color: var(--white-color);
+    font-family:  Verdana, Geneva, Tahoma, sans-serif ,'Inconsolata', monospace;
+    
 }
 
 .chat-page .row{
@@ -45,28 +50,33 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 87vh;
+    height: 100vh;
     scrollbar-width: none;
-    box-shadow: inset 5px 5px 10px #070707,
-            inset -5px -5px 10px #1d1d1d;
+    /* box-shadow: inset 5px 5px 10px #070707,
+            inset -5px -5px 10px #1d1d1d; */
     /* border-radius: 1rem; */
 }
 
-.channel-list, .workspace-list, .chat-section{
-    /* border-right: 0.5px solid var(--dark--white); */
+.workspace-list{
+    border-right: 1px solid var(--first-color);
 }
 
 /* .channel-list{
     background-color: var(--dark--white);
 } */
 
-/* .channel-list, .profile-section{
-    background-color: var(--dark--white);
-} */
+.channel-list, .profile-section,.workspace-list{
+    background-color: #1e2126;
+}
 
 .workspace{
     cursor: pointer;
 }
+
+.workspace:hover{
+    border-left: 1px white;
+}
+
 .workspaceList, .channelList{
     overflow: scroll;
     scrollbar-width: none;
@@ -119,8 +129,8 @@
     border-radius: 0.5rem;
     margin: 0.5rem 0;
     /* box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
-    box-shadow:  5px 5px 10px #070707,
-             -5px -5px 10px #1d1d1d;
+    /* box-shadow:  5px 5px 10px #070707,
+             -5px -5px 10px #1d1d1d; */
 }
 
 .channelName:active, .channelName:hover{
@@ -159,8 +169,8 @@
     font-size: 1rem;
     transition: 0.4s;
     background: linear-gradient(145deg, #d76565, #ff7878);
-    box-shadow: inset 5px 5px 10px #602d2d,
-            inset -5px -5px 10px #ff7d7d;
+    /* box-shadow: inset 5px 5px 10px #602d2d,
+            inset -5px -5px 10px #ff7d7d; */
 }
 
 #createChannel i{
@@ -236,7 +246,7 @@
     border-bottom-right-radius: none;
     border-top-left-radius: 1rem;
     border-top-right-radius: 1rem;
-    border-right: 3px solid var(--dark-color);
+    /* border-right: 2px solid var(--dark-color); */
 }
 
 .chatbubble-left{
@@ -245,11 +255,11 @@
     border-bottom-right-radius: 1rem;
     border-top-left-radius: 1rem;
     border-top-right-radius: 1rem;
-    border-left: 3px solid var(--dark-color);
+    /* border-left: 2px solid var(--dark-color); */
 }
 
 .chats{
-    height: 63vh;
+    height: 80vh;
     margin: 0;
     padding: 0;
     overflow: scroll;
@@ -271,12 +281,12 @@
     flex-direction: column;
     min-width: 30%;
     max-width: 75%;
-    background-color: var(--first-color);
+    background-color: #1e2126;
     margin: 0.5rem;
     padding: 0.5rem;
-    background: linear-gradient(145deg, #131313, #101010);
-box-shadow:  5px 5px 10px #070707,
-             -2px -2px 7px #1d1d1d;
+    /* background: linear-gradient(145deg, #131313, #101010); */
+/* box-shadow:  5px 5px 10px #070707,
+             -2px -2px 7px #1d1d1d; */
 }
 
 .chatbubble img{
@@ -318,6 +328,13 @@ box-shadow: inset 5px 5px 10px #1e1e1e,
             inset -5px -5px 10px #343434;
 }
 
+.send-message-container form {
+    width: 90%;
+}
+
+.send-message {
+    color: var(--white-color);
+}
 
 .send-message-container:placeholder{
     color: var(--first-color);

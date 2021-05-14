@@ -6,24 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/nav.css') }}">
+    <!-- <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/nav.css') }}"> -->
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/chat.css') }}">
     <title>title</title>
 </head>
 <body id="body">
     <div id="blur">
-        <header class="header">
+        <!-- <header class="header">
             <div class="header-container">
                 <img src="../../static/images/ftyswdhgWhatsApp Image 2021-03-11 at 2.59.39 PM.png" alt="" class="header-img">
     
-                <a href="#" class="header-logo">XYZ</a>
+                <a href="#" class="header-logo">XYZ</a> -->
     
                 <!-- <div class="header-search">
                     <input type="search" placeholder="Search" class="header-input">
                     <i class="fas fa-search header-icon"></i>
                 </div> -->
-            </div>
-        </header>
+            <!-- </div>
+        </header> -->
     
     
         <div class="chat-page">
@@ -130,8 +130,8 @@
                     <div class="card">
                         <img class="card-img-top" src="{{image}}" alt="Card image cap">
                         <div class="card-body" id="card_body">
-                          <h5 class="card-title" id="username">{{username}}</h5>
-                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                          <h5 class="card-title" id="username">@{{username}}</h5>
+                          <p class="card-text">Hie. I am an App and Web developer with Flutter and Javascript as my strong points. I am currently SY Computer Engineering Student.</p>
                           <div class="btn-group">
                             <a href="/logout" class="btn btn-primary mr-1">Logout</a>
                             <a href="#" class="btn btn-primary">Edit Profile</a>
