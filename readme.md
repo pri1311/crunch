@@ -4,7 +4,7 @@
 </a>
 </p>
 
-<h3 align="center"> Web Browser and Scrapper 
+<h3 align="center"> Crunch- Easy to use group chat-app
     <br> 
 </h3>
 
