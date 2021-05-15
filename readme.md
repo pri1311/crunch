@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width="80" alt="readme" src="logo.jpg">
+ <img width="80" alt="readme" src="https://www.vhv.rs/dpng/d/219-2192268_samsung-bada-games-free-download-for-wave-chat.png">
 </a>
 </p>
 
