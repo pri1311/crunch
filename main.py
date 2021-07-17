@@ -13,11 +13,7 @@ app = create_app()
 
 socketio = SocketIO(app,logger=True, engineio_logger=True)
 
-Cloud.config( 
-  cloud_name = "xyz123456789xyz", 
-  api_key = "881914523258343", 
-  api_secret = "t5p0GTrAArAQGyj2YJUpg3RUeCM" 
-)
+# copy cloudinary credentials here
 
 @socketio.on('sendimage')
 def sendimage(data):
