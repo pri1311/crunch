@@ -8,11 +8,7 @@ from cloudinary.utils import cloudinary_url
 
 auth = Blueprint('auth', __name__)
 
-Cloud.config(
-    cloud_name="xyz123456789xyz",
-    api_key="881914523258343",
-    api_secret="t5p0GTrAArAQGyj2YJUpg3RUeCM"
-)
+# copy cloudinary credentials here
 
 
 @auth.route('/signup', methods=['POST', 'GET'])
