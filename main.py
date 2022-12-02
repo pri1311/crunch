@@ -13,7 +13,12 @@ app = create_app()
 
 socketio = SocketIO(app,logger=True, engineio_logger=True)
 
-# copy cloudinary credentials here
+# Add your cloudinary credentials here!
+Cloud.config( 
+  cloud_name = "", 
+  api_key = "", 
+  api_secret = "" 
+)
 
 @socketio.on('sendimage')
 def sendimage(data):

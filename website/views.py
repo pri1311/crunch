@@ -7,7 +7,12 @@ import cloudinary as Cloud
 from cloudinary import uploader
 from cloudinary.utils import cloudinary_url
 
-copy cloud config data here
+# Add your cloudinary credentials here!
+Cloud.config( 
+  cloud_name = "", 
+  api_key = "", 
+  api_secret = "" 
+)
 
 @views.route('/')
 def landing_page():
