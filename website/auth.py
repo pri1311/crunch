@@ -54,7 +54,7 @@ def signup_post():
         db.session.add(u)
         db.session.commit()
 
-        return redirect(url_for('views.chat'))
+        return render_template("/auth/login-register.html")
     else:
         return render_template("/auth/login-register.html")
 
