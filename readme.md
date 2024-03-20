@@ -30,11 +30,23 @@
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
-- "git clone https://github.com/pri1311/crunch"
-- "cd crunch" 
-- "pip install -r requirements.txt"
+- Clone repository
+  ```sh
+  git clone https://github.com/pri1311/crunch
+  ```
+- Change directory
+  ```sh
+  cd crunch
+  ```
+- Install requirements (You can create virtual environment to not mess with your local pip packages.)
+  ```sh
+  pip install -r requirements.txt
+  ```
 - Add your cloudinary credentials to main.py, auth.py and views.py files.
-- "python main.py" 
+- Run server
+  ```sh
+  python main.py
+  ```
 
 
 ## ⛏️ Built With <a name = "tech_stack"></a>
@@ -68,7 +80,7 @@
 ## ✍️ Authors <a name = "authors"></a>
 
 - [Priya Nagda](https://github.com/pri1311)
-- [Jainam Dharod]()
+- [Jainam Dharod](https://github.com/Jainam-Dharod)
 
 
 ## 🎉 Acknowledgments <a name = "acknowledgments"></a>
