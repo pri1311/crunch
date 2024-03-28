@@ -80,6 +80,10 @@
                 <div class="col-md-7 chat-section">
                     <div class="main-block">
                         <div class="channel-heading">
+                            <label class="switch">
+                              <input type="checkbox" id="toggle">
+                              <span class="slider round" id="toggle-icon" title="Mute"></span>
+                            </label>
                             {% if channelCount > 0 %}
                                 <p class="chat-workspace-name" id="chat-workspace-name">{{channels[0].name}}</p>
                             {% else %}

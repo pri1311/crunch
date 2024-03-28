@@ -1,6 +1,23 @@
+const notificationSound = new Audio('../static/audio/notification_sound.mp3');
+
+function playNotificationSound() {
+    notificationSound.play();
+}
+
+const toggle = document.getElementById('toggle');
+
+toggle.addEventListener('change', function() {
+  if (this.checked) {
+    document.getElementById('toggle-icon').title = "Unmute";
+  } else {
+    document.getElementById('toggle-icon').title = "Mute";
+  }
+});
+
+
 document.addEventListener('DOMContentLoaded', ()=>{
     scrollDownChatWindow()
-    var socket = io.connect('http://127.0.0.1:5000/' );
+    var socket = io.connect('/' );
 
     socket.on('connect', function() {
         socket.emit('message',{data: 'I\'m connected!'});
@@ -200,6 +217,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
                     div.classList.add('chatbubble-left');
                     b.innerHTML = data['username']
                     p.innerHTML= data['msg']
+                    if (!document.getElementById('toggle').checked){
+                        playNotificationSound();
+                    }
                     div.appendChild(b)
                     div.appendChild(p)
                     list.appendChild(div);                
