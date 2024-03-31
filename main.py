@@ -90,11 +90,10 @@ def handle_createChannel(data):
     room = Workspace.query.filter_by(id = data['wid']).first()
     db.session.add(c)
     db.session.commit()
-    channel = Channel.query.filter_by(name = data['name']).first()
     data = {
         "name":data['name'],
         "admin_username": data['username'],
-        "id": channel.id,
+        "id": c.id,
         "wid":data['wid'],
     }
     emit('createChannelJS',data, room=room.name, broadcast= True)
