@@ -65,19 +65,18 @@ def handle_createWorkspace(data):
     w.joining_code = joining_code
     db.session.add(w)
     db.session.commit()
-    room = Workspace.query.filter_by(name = data['name']).first()
     user = User.query.filter_by(name = data['username']).first()
     if user.workspace_list:
-        user.workspace_list = user.workspace_list + str(room.id) + " "
+        user.workspace_list = user.workspace_list + str(w.id) + " "
     else:
-        user.workspace_list = str(room.id) +" "
+        user.workspace_list = str(w.id) +" "
     db.session.commit()
     print("hello",user.workspace_list)
-    join_room(room.name)
+    join_room(w.name)
     data = {
         "name":data['name'],
         "admin_username": data['username'],
-        "id": room.id, 
+        "id": w.id,
         "joining_code": joining_code,
     }
     emit('createWorkspaceJS',data, broadcast=True)
@@ -91,11 +90,10 @@ def handle_createChannel(data):
     room = Workspace.query.filter_by(id = data['wid']).first()
     db.session.add(c)
     db.session.commit()
-    channel = Channel.query.filter_by(name = data['name']).first()
     data = {
         "name":data['name'],
         "admin_username": data['username'],
-        "id": channel.id,
+        "id": c.id,
         "wid":data['wid'],
     }
     emit('createChannelJS',data, room=room.name, broadcast= True)
